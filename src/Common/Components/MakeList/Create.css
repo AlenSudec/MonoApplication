@@ -1,0 +1,54 @@
+.create-arrow{
+    display: block;
+    width: 0px;
+    height: 0px;
+    border: 20px solid transparent;
+    border-bottom-color: lightblue;
+    border-top-width: 0px;
+    margin-top: -10px;
+    margin-left: 50px;
+}
+.create-container{
+    background-color: lightblue;
+    position: absolute;
+    z-index: 10;
+    margin-left: 80px;
+    margin-top: 2px;
+    height: 200px;
+    animation: show 1s ease-in-out;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+.create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.create-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+.create-label {
+    margin-left: 10px;
+}
+.create-input {
+    border: none;
+    background: none;
+    border-bottom: 2px solid red;
+    outline: none;
+}
+.create-btn {
+    border: none;
+    background-color: green;
+    padding: 10px;
+    margin-top: -15px;
+    width: 90%;
+}
+@keyframes show {
+    from {opacity: 0;}
+    to {opacity: 1; }
+}

@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import MakeList from "./Common/Components/MakeList/List";
+import Edit from "./Common/Components/MakeList/Edit";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <header className="App-header">
+          <h1><Link to="/" className='link'>Lista proizvođača</Link></h1>
+          <h1>Link2</h1>
+        </header>
+        <div className="content">
+            <Routes>
+              <Route path = "/" element={<MakeList/>}/>
+              <Route path = "/editMake" element={<Edit/>}/>
+            </Routes>
+        </div>
+      </Router>
     </div>
   );
 }
