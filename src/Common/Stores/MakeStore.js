@@ -1,13 +1,14 @@
 import db from "../Service/firebase";
 import { makeAutoObservable } from "mobx";
 
+
 class MakeStore {
     data = [];
     constructor(){
         makeAutoObservable(this);
         this.getMakeAsync();
     }
-
+    
     getMakeAsync = async () => {
         const getData = db.collection("VehicleMake");
         await getData.get().then((e) => {
@@ -44,6 +45,7 @@ class MakeStore {
         this.setData(this.results);
     }
     updateMakeAsync = async (data) => {
+        
         const currMake = db.collection("VehicleMake").doc(data.docId);
         await currMake.update({
             Name: data.Name,
@@ -56,6 +58,8 @@ class MakeStore {
             }
         }
         this.setData(this.results);
+        
+
     }
     setData(data){
         this.data = data;

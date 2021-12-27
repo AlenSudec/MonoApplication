@@ -3,11 +3,14 @@ import MakeStore from "../../Stores/MakeStore";
 import Store from "../../Stores/Store";
 import "./Create.css";
 
+
+
 const Create = observer(() => {
     let data = {
         Name: "",
         Abrv: "",
     }
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         data = {
@@ -18,12 +21,9 @@ const Create = observer(() => {
         console.log("submitted");
         Store.setShowCreate();
         MakeStore.createMakeAsync(data);
-
     }
-
-    return(
-        
-        
+    
+    return (
         <div className="create-container">
             <div className="create-arrow"></div>
             <form className="create-form" onSubmit={handleSubmit}>
@@ -37,7 +37,7 @@ const Create = observer(() => {
                     />
                 </div>
                 <div className="create-info">
-                    <label className="create-label">Abrv:</label>
+                    <label className="create-label">Skraćenica:</label>
                     <input
                         type="text"
                         required

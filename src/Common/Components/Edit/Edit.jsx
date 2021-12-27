@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom";
 import MakeStore from "../../Stores/MakeStore";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Edit.css";
 const Edit = () => {
     const location = useLocation();
-    const currentData = location.state;
+    let currentData = location.state;
+    const navigate = useNavigate();
     let data = {
         docId : null,
         Name: "",
@@ -20,18 +20,19 @@ const Edit = () => {
             Abrv: e.target.Abrv.value,
         }
         MakeStore.updateMakeAsync(data);
+        navigate("/");
         
     }
     const deleteMake = (id) => {
         MakeStore.deleteMakeAsync(id);
-        
+        navigate("/");
     }
     return (
         
         <div className="edit-container">
             <div className="edit__header">
                 <h1>Uredi</h1>
-                <div>ID trenutnog dokumenta: {currentData.docId}</div>
+                <div>ID proizvođača: {currentData.docId}</div>
             </div>
             
                 <form className="edit__form" onSubmit={handleUpdate}>
@@ -40,8 +41,10 @@ const Edit = () => {
                         <input
                             required
                             name="Name"
-                            placeholder={currentData.Name}
                             className="form__input"
+                            defaultValue={currentData.Name}
+                            
+                            
                         ></input>
                     </div>
                     <div className="form__child">
@@ -49,11 +52,12 @@ const Edit = () => {
                         <input
                             required
                             name="Abrv"
-                            placeholder={currentData.Abrv}
                             className="form__input"
+                            defaultValue={currentData.Abrv}
+                            
                         ></input>
                     </div>
-                    <button className="form__btn"type="submit">Spremi</button>
+                    <button className="form__btn"type="submit">Spremi promjene</button>
                     
                 </form>
             

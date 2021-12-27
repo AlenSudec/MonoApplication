@@ -7,6 +7,10 @@
     flex-direction: column;
     gap: 30px;
     justify-content: center;
+    padding-bottom: 35px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 12px 76px rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
 }
 .edit__header {
     text-align: center;
@@ -29,21 +33,31 @@
     border: none;
     outline: none;
     background: none;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid #006d77;
 }
 .form__btn {
     min-width: 50%;
     margin-right: auto;
     margin-left: auto;
     border: none;
-    background-color: green;
+    background-color: #006d77;
+    color: #FFFFFF;
+    border-radius: 16px;
     padding: 10px;
+}
+.form__btn:hover{
+    background-color: #069ba8;
 }
 .delete-btn{
     min-width: 20%;
     margin-right: auto;
     margin-left: auto;
     border: none;
-    background-color: red;
+    background-color: #ff4500;
+    color: #FFFFFF;
+    border-radius: 16px;
     padding: 7px;
+}
+.delete-btn:hover{
+    background-color: #e9825d;
 }

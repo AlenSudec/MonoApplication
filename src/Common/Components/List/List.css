@@ -13,9 +13,9 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 200px;
+    gap: 150px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #5d7199;
+    background-color: #006d77;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 30px;
@@ -27,13 +27,15 @@
     padding: 28px 32px;
     cursor: pointer;
     text-decoration: none;
-    
+
 }
+
 .editMake {
     text-decoration: none;
 }
 .list__child {
-    min-width: 250px;
+    min-width: 300px;
+    
 }
 
 .list__make--header{
@@ -51,7 +53,7 @@
     margin-left: 20px;
 }
 .create__btn {
-    background-color:#344d7e;
+    background-color:#006d77;
     border-radius: 10px;
     height: 40px;
     padding-left: 15px;
@@ -67,12 +69,26 @@
     
 }
 .create__plus {
-    margin-right: 5px;
+    margin-right: 10px;
 }
 .list {
     display: flex;
     flex-direction: column;
     gap: 20px;
     
+}
+.list__child--first {
+    text-align: left;
+}
+.list__make:hover > .list__child--last{
+    animation: slide 1s ease-in-out infinite;
+}
+@keyframes slide {
+    0%,100% {
+        margin-left: 0px;
+    }
+    50% {
+        margin-left: 20px;
+    }
 }
 

@@ -1,6 +1,6 @@
 import './App.css';
-import MakeList from "./Common/Components/MakeList/List";
-import Edit from "./Common/Components/MakeList/Edit";
+import List from "./Common/Components/List";
+import Edit from "./Common/Components/Edit";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,11 +14,11 @@ function App() {
       <Router>
         <header className="App-header">
           <h1><Link to="/" className='link'>Lista proizvođača</Link></h1>
-          <h1>Link2</h1>
+          
         </header>
         <div className="content">
             <Routes>
-              <Route path = "/" element={<MakeList/>}/>
+              <Route path = "/" element={<List/>}/>
               <Route path = "/editMake" element={<Edit/>}/>
             </Routes>
         </div>

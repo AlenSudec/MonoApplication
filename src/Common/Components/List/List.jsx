@@ -1,16 +1,25 @@
 import { observer } from "mobx-react";
-import MakeStore from "../../Stores/MakeStore";
-import Create from "./Create";
-import Store from "../../Stores/Store";
 import { Link } from "react-router-dom";
-import "./List.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import "./List.css";
+import Create from "../Create";
+import Store from "../../Stores/Store";
+import MakeStore from "../../Stores/MakeStore";
+
+
+
+
 
 const List = observer(() => {
     const handleClick = () => {
         Store.setShowCreate();
+    }
+    const hideCreate = () => {
+        if(Store.showCreate){
+            Store.setShowCreate();
+        }
     }
     return(
         <>
@@ -31,12 +40,12 @@ const List = observer(() => {
                         <div className="list">
                         <div className="list__make list__make--header">
                             {/* <div>ID</div> */}
-                            <div className="list__child">Ime</div>
+                            <div className="list__child list__child--first">Ime</div>
                             <div className="list__child">Skraćenica</div>
                         </div>
                         
                         {MakeStore.data.map(make =>
-                            <Link to="/editMake" className="editMake" state={{
+                            <Link to="/editMake" className="editMake" onClick={hideCreate} state={{
                                 docId: make.docId,
                                 Name: make.Name,
                                 Abrv: make.Abrv
@@ -44,7 +53,7 @@ const List = observer(() => {
                                 <div className="list__make">
                                     {console.log(MakeStore.data.length)}
                                     {/* <div>{make.docId}</div> */}
-                                    <div className="list__child">{make.Name}</div>
+                                    <div className="list__child list__child--first">{make.Name}</div>
                                     <div className="list__child">{make.Abrv}</div>
                                     <div className="list__child list__child--last">
                                         <FontAwesomeIcon icon={faAngleDoubleRight}/>

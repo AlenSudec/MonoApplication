@@ -3,19 +3,19 @@
     width: 0px;
     height: 0px;
     border: 20px solid transparent;
-    border-bottom-color: lightblue;
+    border-bottom-color: #83c5be;
     border-top-width: 0px;
     margin-top: -10px;
     margin-left: 50px;
 }
 .create-container{
-    background-color: lightblue;
+    background-color: #83c5be;
     position: absolute;
     z-index: 10;
     margin-left: 80px;
     margin-top: 2px;
     height: 200px;
-    animation: show 1s ease-in-out;
+    animation: show 0.5s ease-in-out;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     
 }
@@ -33,20 +33,29 @@
     text-align: left;
 }
 .create-label {
-    margin-left: 10px;
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #006d77;
 }
 .create-input {
     border: none;
     background: none;
-    border-bottom: 2px solid red;
+    border-bottom: 2px solid #006d77;
     outline: none;
+    
+    font-weight: 500;
 }
 .create-btn {
     border: none;
-    background-color: green;
+    background-color: #006d77;
     padding: 10px;
     margin-top: -15px;
     width: 90%;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 10px;
 }
 @keyframes show {
     from {opacity: 0;}
