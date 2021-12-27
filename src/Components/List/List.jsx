@@ -33,39 +33,32 @@ const List = observer(() => {
                             </button>
                         {Store.showCreate ? (<Create/>) : ("")}
                     </div>
-                    
                 </div>
                 
-                
-                        <div className="list">
-                        <div className="list__make list__make--header">
-                            {/* <div>ID</div> */}
-                            <div className="list__child list__child--first">Ime</div>
-                            <div className="list__child">Skraćenica</div>
-                        </div>
+
+                <div className="list">
+                    <div className="list__make list__make--header">
+                        <div className="list__child list__child--first">Ime</div>
+                        <div className="list__child">Skraćenica</div>
+                    </div>
                         
-                        {MakeStore.data.map(make =>
-                            <Link to="/editMake" className="editMake" onClick={hideCreate} state={{
+                    {MakeStore.data.map(make =>
+                        <Link to="/editMake" className="editMake" onClick={hideCreate} state={{
                                 docId: make.docId,
                                 Name: make.Name,
                                 Abrv: make.Abrv
-                            }}>
-                                <div className="list__make">
-                                    {console.log(MakeStore.data.length)}
-                                    {/* <div>{make.docId}</div> */}
-                                    <div className="list__child list__child--first">{make.Name}</div>
-                                    <div className="list__child">{make.Abrv}</div>
-                                    <div className="list__child list__child--last">
-                                        <FontAwesomeIcon icon={faAngleDoubleRight}/>
-                                    </div>
-                                
-                                    {/* Uredi
-                                    Obriši */}
+                        }}>
+                            <div className="list__make">
+                                <div className="list__child list__child--first">{make.Name}</div>
+                                <div className="list__child">{make.Abrv}</div>
+                                <div className="list__child list__child--last">
+                                    <FontAwesomeIcon icon={faAngleDoubleRight}/>
                                 </div>
-                            </Link>
+                            </div>
+                        </Link>
                             
-                        )}
-                        </div>
+                    )}
+                    </div>
                         {/* {setTimeout(() => (
                             MakeStore.data.length === 0 ? ( <h1>Unesite proizvođače pritiskom na gumb u kutu</h1>) : (<></>)
                             ), 500)} */}

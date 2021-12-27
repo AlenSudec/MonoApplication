@@ -22,7 +22,6 @@ const Create = observer(() => {
         Store.setShowCreate();
         MakeStore.createMakeAsync(data);
     }
-    
     return (
         <div className="create-container">
             <div className="create-arrow"></div>

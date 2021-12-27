@@ -1,6 +1,6 @@
 import './App.css';
-import List from "./Common/Components/List";
-import Edit from "./Common/Components/Edit";
+import List from "./Components/List";
+import Edit from "./Components/Edit";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,7 +19,7 @@ function App() {
         <div className="content">
             <Routes>
               <Route path = "/" element={<List/>}/>
-              <Route path = "/editMake" element={<Edit/>}/>
+              <Route path = "/editMake" element={<Edit/>}/> 
             </Routes>
         </div>
       </Router>
