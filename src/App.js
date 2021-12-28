@@ -14,7 +14,6 @@ function App() {
       <Router>
         <header className="App-header">
           <h1><Link to="/" className='link'>Lista proizvođača</Link></h1>
-          
         </header>
         <div className="content">
             <Routes>

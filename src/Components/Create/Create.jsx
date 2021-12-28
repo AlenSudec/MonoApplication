@@ -1,9 +1,7 @@
 import { observer } from "mobx-react";
-import MakeStore from "../../Stores/MakeStore";
-import Store from "../../Stores/Store";
+import MakeStore from "../../Common/Stores/MakeStore";
+import Store from "../../Common/Stores/Store";
 import "./Create.css";
-
-
 
 const Create = observer(() => {
     let data = {
@@ -18,14 +16,26 @@ const Create = observer(() => {
             Name: e.target.makeName.value,
             Abrv: e.target.makeAbrv.value
         }
-        console.log("submitted");
         Store.setShowCreate();
         MakeStore.createMakeAsync(data);
     }
+
+    const handleClickOutside = () => {
+        Store.setShowCreate();
+    }
+
     return (
+        <>
+        <div 
+            className="create-filler" 
+            onClick={handleClickOutside}
+        ></div>
         <div className="create-container">
             <div className="create-arrow"></div>
-            <form className="create-form" onSubmit={handleSubmit}>
+            <form 
+                className="create-form" 
+                onSubmit={handleSubmit}
+            >
                 <div className="create-info">
                     <label className="create-label">Ime:</label>
                     <input
@@ -49,7 +59,7 @@ const Create = observer(() => {
                 </div>
             </form>
         </div>
-        
+        </>
     )
 })
 export default Create;

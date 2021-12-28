@@ -1,5 +1,6 @@
 import db from "../Service/firebase";
 import { makeAutoObservable } from "mobx";
+import Store from "./Store";
 
 
 class MakeStore {
@@ -13,6 +14,9 @@ class MakeStore {
         const getData = db.collection("VehicleMake");
         await getData.get().then((e) => {
             this.results = [];
+            if(e.empty === true){
+                Store.setEmptyList(true);
+            }
             e.forEach(doc => {
                 let result = {
                     docId : doc.id,
@@ -32,7 +36,9 @@ class MakeStore {
             data.docId = docRef.id;
             this.results.push(data);
             this.setData(this.results);
+            Store.setEmptyList(false);
         })
+        
     }
     deleteMakeAsync = async (id) => {
         const getMake = db.collection("VehicleMake").doc(id);
@@ -43,6 +49,7 @@ class MakeStore {
             }
         }
         this.setData(this.results);
+        this.getMakeAsync();
     }
     updateMakeAsync = async (data) => {
         
@@ -58,8 +65,6 @@ class MakeStore {
             }
         }
         this.setData(this.results);
-        
-
     }
     setData(data){
         this.data = data;

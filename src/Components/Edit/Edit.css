@@ -44,20 +44,65 @@
     color: #FFFFFF;
     border-radius: 16px;
     padding: 10px;
+    cursor: pointer;
 }
 .form__btn:hover{
     background-color: #069ba8;
 }
 .delete-btn{
-    min-width: 20%;
-    margin-right: auto;
-    margin-left: auto;
+    min-width: 5%;
+    cursor: pointer;
     border: none;
     background-color: #ff4500;
     color: #FFFFFF;
-    border-radius: 16px;
-    padding: 7px;
+    border-radius: 10px;
+    padding: 10px;
 }
 .delete-btn:hover{
     background-color: #e9825d;
 }
+.header__id{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+
+}
+.header__title{
+    display: flex;
+    flex-direction: row;
+    gap: 300px;
+    align-items: center;
+}
+.header__back{
+    min-width: 5%;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+    background-color: #006d77;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.back__icon{
+    transform: scale(1.8);
+}
+.header__back:hover{
+    background-color: #069ba8;
+}
+
+.header__back:hover > .back__icon {
+    animation: slide--back 1s ease-in-out infinite;
+}
+@keyframes slide--back {
+    0%, 100% {
+        margin-right: 0px;
+    }
+    50% {
+        margin-right: 8px;
+    }
+    
+}
+
