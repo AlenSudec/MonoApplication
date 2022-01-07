@@ -1,40 +1,19 @@
 import { observer } from "mobx-react";
-import MakeStore from "../../Common/Stores/MakeStore";
-import Store from "../../Common/Stores/Store";
+import ListStore from "../../../Make/Stores/ListStore";
 import "./Create.css";
 
 const Create = observer(() => {
-    let data = {
-        Name: "",
-        Abrv: "",
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        data = {
-            docId: "",
-            Name: e.target.makeName.value,
-            Abrv: e.target.makeAbrv.value
-        }
-        Store.setShowCreate();
-        MakeStore.createMakeAsync(data);
-    }
-
-    const handleClickOutside = () => {
-        Store.setShowCreate();
-    }
-
     return (
         <>
         <div 
             className="create-filler" 
-            onClick={handleClickOutside}
+            onClick={ListStore.handleClickOutside}
         ></div>
         <div className="create-container">
             <div className="create-arrow"></div>
             <form 
                 className="create-form" 
-                onSubmit={handleSubmit}
+                onSubmit={ListStore.handleSubmit}
             >
                 <div className="create-info">
                     <label className="create-label">Ime:</label>

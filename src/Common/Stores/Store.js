@@ -2,7 +2,8 @@ import { makeAutoObservable } from "mobx";
 
 class Store {
     showCreate = false;
-    emptyList = false;
+    runOnce = false;
+    
     constructor(){
         makeAutoObservable(this);
     }
@@ -10,8 +11,8 @@ class Store {
     setShowCreate(){
         this.showCreate = !this.showCreate;
     }
-    setEmptyList(e){
-        this.emptyList = e;
+    setRunOnce(){
+        this.runOnce = !this.runOnce;
     }
 }
 export default new Store();
