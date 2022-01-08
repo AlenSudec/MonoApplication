@@ -3,7 +3,7 @@
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
 }
 .header {
     display: flex;
@@ -35,6 +35,7 @@
 }
 .list__child {
     min-width: 300px;
+    cursor: pointer;
 }
 
 .list__make--header{
@@ -97,6 +98,46 @@
     margin-right: 100px;
     animation: rotate-car 7s ease infinite;
 }
+.list__pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+}
+.list__back, .list__forward {
+    width: 200px;
+    height: 50px;
+    background-color: #069ba8;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.list__back:hover, .list__forward:hover{
+    background-color: #0b585f;
+}
+.back__icon {
+    margin-right: 15px;
+}
+.forward__icon{
+    margin-left: 15px;
+    transform: scale(1.8);
+}
+.sort-arrow {
+    transform: scale(0.5);
+    margin-bottom: -3px;
+    margin-left: 5px;
+}
+.list--fixed-size{
+    height: 540px;
+}
+.header__filter {
+    position: absolute;
+    background-color:#069ba8;
+    margin-top: -600px;
+    margin-left: 1270px;
+}
+
 @keyframes slide {
     0%,100% {
         margin-left: 0px;

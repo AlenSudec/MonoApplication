@@ -5,37 +5,80 @@ import MakeStore from "./MakeStore";
 
 class ListStore {
     results = [];
+    lastVisible = null;
+    firstVisible = null;
+    sortFilter = "Name";
+    ascOrDesc = "asc";
     constructor(){
         makeAutoObservable(this);
         this.getMakeAsync();
     }
 
-    getMakeAsync = async () => {
-        const resultMake = await makeService.getMakeAsync();
-        this.results = [];
-        resultMake.forEach(doc => {
-            let result = {
-                docId : doc.id,
-                Name : doc.data().Name,
-                Abrv : doc.data().Abrv,
+    getMakeAsync = async (frwrd, bcwrd) => {
+        makeService.filterTest();
+        if(frwrd){
+             //NEXT QUERY
+            const resultMake = await makeService.getMakeNextPageAsync(this.lastVisible,this.sortFilter);
+            console.log(resultMake);
+            if(resultMake.docs.length > 0){
+                this.lastVisible = resultMake.docs[resultMake.docs.length-1];
+                this.firstVisible = resultMake.docs[resultMake.docs.length - (resultMake.docs.length-1)-1];
+                this.results = [];
+                resultMake.forEach(doc => {
+                    let result = {
+                        docId : doc.id,
+                        Name : doc.data().Name,
+                        Abrv : doc.data().Abrv,
+                    }
+                    this.results.push(result);
+                })
+                MakeStore.setData(this.results);
             }
-            this.results.push(result);
-        })
-        MakeStore.setData(this.results);
+            else {
+                alert("Nema vise proizvodaca"); //RESI ALERT FRONTEND
+            }
+            
+        }
+        else if(bcwrd){
+            const resultMake = await makeService.getMakeBackPageAsync(this.firstVisible,this.sortFilter);
+            if(resultMake.docs.length === 5) {
+                this.lastVisible = resultMake.docs[resultMake.docs.length-1];
+                this.firstVisible = resultMake.docs[resultMake.docs.length - (resultMake.docs.length-1)-1];
+                this.results = [];
+                resultMake.forEach(doc => {
+                    let result = {
+                        docId : doc.id,
+                        Name : doc.data().Name,
+                        Abrv : doc.data().Abrv,
+                    }
+                    this.results.push(result);
+                })
+                MakeStore.setData(this.results);
+            }
+            else {
+                alert("Nema vise"); //RESI ALERT FRONTEND
+            }
+        }
+        else {
+            //INIT QUERY
+            const resultMake = await makeService.getMakeAsync(this.sortFilter, this.ascOrDesc);
+            this.lastVisible = resultMake.docs[resultMake.docs.length-1];
+            this.results = [];
+            resultMake.forEach(doc => {
+                let result = {
+                    docId : doc.id,
+                    Name : doc.data().Name,
+                    Abrv : doc.data().Abrv,
+                }
+                this.results.push(result);
+            })
+            MakeStore.setData(this.results);
+        }
     }
     createMakeAsync = async (data) => {
-        const resultMake = await makeService.createMakeAsync(data);
-        this.results = [];
-        MakeStore.data.forEach(e => {
-            let result = {
-                docId : e.docId,
-                Name : e.Name,
-                Abrv: e.Abrv
-            }
-            this.results.push(result);
-        })
-        this.results.push(resultMake);
-        MakeStore.setData(this.results);
+        await makeService.createMakeAsync(data);
+        alert("Dodali ste proizvodaca"); // resi frontend alert
+        this.getMakeAsync();
     }
     //List functions
     handleClick = () => {
@@ -60,6 +103,22 @@ class ListStore {
     }
     handleClickOutside = () => {
         Store.setShowCreate();
+    }
+    setSortFilter(filter){
+        if(this.sortFilter === filter){
+            this.setAscOrDesc();
+        }
+        this.sortFilter = filter;
+        
+        this.getMakeAsync();
+    }
+    setAscOrDesc(){
+        if(this.ascOrDesc === "asc"){
+            this.ascOrDesc = "desc"
+        }
+        else {
+            this.ascOrDesc = "asc"
+        }
     }
 }
 export default new ListStore();
