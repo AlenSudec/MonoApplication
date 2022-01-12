@@ -16,7 +16,7 @@ const Create = observer(() => {
                 onSubmit={ListStore.handleSubmit}
             >
                 <div className="create-info">
-                    <label className="create-label">Ime:</label>
+                    <label className="create-label">Name:</label>
                     <input
                         type="text"
                         required
@@ -25,7 +25,7 @@ const Create = observer(() => {
                     />
                 </div>
                 <div className="create-info">
-                    <label className="create-label">Skraćenica:</label>
+                    <label className="create-label">Abrv:</label>
                     <input
                         type="text"
                         required
@@ -33,8 +33,26 @@ const Create = observer(() => {
                         className="create-input"
                     />
                 </div>
+                <div className="create-info">
+                    <label className="create-label">Country:</label>
+                    <input
+                        type="text"
+                        required
+                        name="makeCountry"
+                        className="create-input"
+                    />
+                </div>
+                <div className="create-info">
+                    <label className="create-label">Revenue:</label>
+                    <input
+                        type="number"
+                        required
+                        name="makeRevenue"
+                        className="create-input"
+                    />
+                </div>
                 <div>
-                    <button className="create-btn" type="submit">Dodaj</button>
+                    <button className="create-btn" type="submit">Add</button>
                 </div>
             </form>
         </div>

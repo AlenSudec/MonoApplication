@@ -3,19 +3,22 @@ import { observer } from "mobx-react";
 import EditStore from "../../Stores/EditStore";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import "./Edit.css";
-import Store from "../../../../Common/Stores/Store";
+import CreateModel from "../../../Model/Components/CreateModel";
+import ListStore from "../../../Model/Stores/ListStore";
+import ModelStore from "../../../Model/Stores/ModelStore";
+import MakeStore from "../../Stores/MakeStore";
 
 
 const Edit = observer(() => {
-    //find a way to use inside store
     const navigate = useNavigate();
     let { id } = useParams();
-    if(Store.runOnce === false){
+    if(MakeStore.runOnce === false){
         EditStore.getMakeByIdAsync(id);
-        Store.setRunOnce();
+        MakeStore.setRunOnce();
     }  
     return (
         <div className="edit-container">
@@ -30,11 +33,26 @@ const Edit = observer(() => {
                             className="back__icon" 
                         />
                     </button>
-                    <h1>Uredi</h1>
+                    <h1>Edit</h1>
+                    <button
+                        onClick={ListStore.handleClick}
+                        className="create__btn btn--left"
+                    >
+                        <FontAwesomeIcon
+                            icon={faPlusCircle}
+                            className="create__plus"
+                        />
+                        Add model
+
+                    </button>
+                    {ModelStore.showCreate ? (
+                        <CreateModel data={{id : EditStore.currData.docId, Abrv : EditStore.currData.Abrv}}/>
+                    ) : ("")}
+                    
                 </div>
                 
                 <div className="header__id">
-                    <div>ID proizvođača: {EditStore.currData.docId}</div>
+                    <div>Make Id: {EditStore.currData.docId}</div>
                     <button 
                         className="delete-btn" 
                         onClick={() => { EditStore.deleteMake(); navigate("/"); }}
@@ -51,7 +69,7 @@ const Edit = observer(() => {
                     onSubmit={(e) => { EditStore.handleUpdate(e); navigate("/");}}
                 >
                     <div className="form__child">
-                        <label className="form__label">Ime:</label>
+                        <label className="form__label">Name:</label>
                         <input
                             required
                             key={EditStore.currData.Name}
@@ -61,7 +79,7 @@ const Edit = observer(() => {
                         />
                     </div>
                     <div className="form__child">
-                        <label className="form__label">Skraćenica:</label>
+                        <label className="form__label">Abrv:</label>
                         <input
                             required
                             key={EditStore.currData.Abrv}
@@ -71,11 +89,33 @@ const Edit = observer(() => {
                             
                         />
                     </div>
+                    <div className="form__child">
+                        <label className="form__label">Country:</label>
+                        <input
+                            required
+                            key={EditStore.currData.Country}
+                            name="Country"
+                            className="form__input"
+                            defaultValue={EditStore.currData.Country}
+                            
+                        />
+                    </div>
+                    <div className="form__child">
+                        <label className="form__label">Revenue:</label>
+                        <input
+                            required
+                            key={EditStore.currData.Revenue}
+                            name="Revenue"
+                            className="form__input"
+                            defaultValue={EditStore.currData.Revenue}
+                            
+                        />
+                    </div>
                     <button 
                         className="form__btn" 
                         type="submit"
                     >
-                        Spremi promjene
+                        Save changes
                     </button>
                 </form>
         </div>

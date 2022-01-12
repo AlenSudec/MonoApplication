@@ -1,6 +1,5 @@
 import { makeAutoObservable} from "mobx";
 import makeService from "../../../Common/Service/makeService";
-import Store from "../../../Common/Stores/Store";
 import MakeStore from "./MakeStore";
 
 class EditStore {
@@ -18,6 +17,8 @@ class EditStore {
             docId : id,
             Name : resultMake.data().Name,
             Abrv: resultMake.data().Abrv,
+            Country : resultMake.data().Country,
+            Revenue : resultMake.data().Revenue
         }
         this.setCurrData(this.currentData);
         this.setCurrDataId(id);
@@ -26,7 +27,9 @@ class EditStore {
             let content = {
                 docId : e.docId,
                 Name: e.Name,
-                Abrv: e.Abrv
+                Abrv: e.Abrv,
+                Country:  e.Country,
+                Revenue: e.Revenue
             }
             this.contents.push(content);
         })
@@ -37,6 +40,8 @@ class EditStore {
             if(this.contents[i].docId === data.docId){
                 this.contents[i].Name = data.Name;
                 this.contents[i].Abrv = data.Abrv;
+                this.contents[i].Country = data.Country;
+                this.contents[i].Revenue = data.Revenue;
             }
         }
         MakeStore.setData(this.contents);
@@ -51,6 +56,7 @@ class EditStore {
         }
         MakeStore.setData(this.contents);
         this.contents = [];
+        MakeStore.reRunGetMake();
     }
    
     setCurrData(currentData){
@@ -61,11 +67,13 @@ class EditStore {
     }
     //edit functions
     handleBack = async () => {
-        Store.setRunOnce();
+        MakeStore.setRunOnce();
         this.data = {
             docId : null,
             Name : "",
-            Abrv: ""
+            Abrv: "",
+            Country: "",
+            Revenue: "",
         }
         this.setCurrData(this.data);
     }
@@ -74,10 +82,12 @@ class EditStore {
         this.data = {
             docId : null,
             Name: "",
-            Abrv: ""
+            Abrv: "",
+            Country: "",
+            Revenue: "",
         }
         this.setCurrData(this.data);
-        Store.setRunOnce();
+        MakeStore.setRunOnce();
     }
     handleUpdate = (e) => {
         e.preventDefault();
@@ -85,10 +95,12 @@ class EditStore {
             docId : this.currDataId,
             Name : e.target.Name.value,
             Abrv : e.target.Abrv.value,
+            Country : e.target.Country.value,
+            Revenue: e.target.Revenue.value
         }
         this.updateMakeAsync(this.data);
         this.setCurrData(this.data);
-        Store.setRunOnce();
+        MakeStore.setRunOnce();
     }
 }
 export default new EditStore();

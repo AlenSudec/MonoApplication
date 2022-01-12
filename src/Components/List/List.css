@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 150px;
+    /* gap: 150px; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #006d77;
     padding-top: 10px;
@@ -29,12 +29,17 @@
     cursor: pointer;
     text-decoration: none;
 }
-
+.make__info {
+    display: flex;
+    flex-direction: row;
+    min-width: 1000px;
+}
 .edit-make {
     text-decoration: none;
 }
 .list__child {
-    min-width: 300px;
+    /* min-width: 200px; */
+    min-width: 280px;
     cursor: pointer;
 }
 
@@ -68,6 +73,9 @@
     font-weight: 400;
     cursor: pointer;  
 }
+.btn--left{
+    margin-left: -100px;
+}
 .create__btn:hover {
     background-color: #069ba8;
 }
@@ -85,6 +93,10 @@
 }
 .list__child--first {
     text-align: left;
+    min-width: 165px;
+}
+.list__child--firstMake{
+    min-width: 177px;
 }
 .list__make:hover > .list__child--last{
     animation: slide 1s ease-in-out infinite;
@@ -116,9 +128,7 @@
 .list__back:hover, .list__forward:hover{
     background-color: #0b585f;
 }
-.back__icon {
-    margin-right: 15px;
-}
+
 .forward__icon{
     margin-left: 15px;
     transform: scale(1.8);
@@ -134,10 +144,17 @@
 .header__filter {
     position: absolute;
     background-color:#069ba8;
-    margin-top: -600px;
-    margin-left: 1270px;
+    margin-top: 100px;
+    margin-left: 1250px;
 }
-
+.list__container {
+    width: 1200px;
+    height: 685px;
+}
+.back__icon1{
+    margin-right: 15px;
+    transform: scale(1.8);
+}
 @keyframes slide {
     0%,100% {
         margin-left: 0px;

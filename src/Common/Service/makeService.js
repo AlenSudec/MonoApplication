@@ -3,56 +3,143 @@ import { getDoc, where, query, collection, limit, getDocs, startAfter, endBefore
 
 class MakeService {
 
-    // getMakeAsync = async () => {
-    //     const getData = db.collection("VehicleMake");
-    //     return await getData.get();
-    // }
-    filterTest = async () => {
-        const getData = query(collection(db, "VehicleMake"),
-            where("Name", "==", "2223")
-        );
-        const dataSnap = await getDocs(getData);
-        console.log(dataSnap);
-    }
-
     //init pagination
-    getMakeAsync = async (sortFilter, ascOrDesc) => {
-        const getData = query(collection(db, "VehicleMake"), 
-            orderBy(sortFilter, ascOrDesc),
-            limit(5));
-        const dataSnap = await getDocs(getData);
-        return dataSnap;
+    getMakeAsync = async (sortFilter, ascOrDesc, revenue, country) => {
+        if(country === "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"), 
+                orderBy(sortFilter),
+                limit(5)
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else if(country !== "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                orderBy(sortFilter),
+                limit(5)
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+
+        }
+        else if(country === "None" && revenue !== "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                limit(5)
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else {
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                limit(5)
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+       
     }
     //next page
-    getMakeNextPageAsync = async (lastVisible, sortFilter) => {
-        const getData = query(collection(db, "VehicleMake"),
-            orderBy(sortFilter),
-            startAfter(lastVisible),
-            limit(5));
-        const dataSnap = await getDocs(getData);
-        return dataSnap;
+    getMakeNextPageAsync = async (lastVisible, sortFilter, revenue, country) => {
+        if(country === "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                orderBy(sortFilter),
+                startAfter(lastVisible),
+                limit(5));
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else if(country !== "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                orderBy(sortFilter),
+                startAfter(lastVisible),
+                limit(5));
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else if(country === "None" && revenue !== "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                startAfter(lastVisible),
+                limit(5));
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else {
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                startAfter(lastVisible),
+                limit(5));
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
     };
     //back page
-    getMakeBackPageAsync = async (firstVisible, sortFilter) => {
-        const getData = query(collection(db, "VehicleMake"),
-            orderBy(sortFilter),
-            endBefore(firstVisible),
-            limitToLast(5)  
-        );
-        const dataSnap = await getDocs(getData);
-        return dataSnap;
+    getMakeBackPageAsync = async (firstVisible, sortFilter, revenue, country) => {
+        if(country === "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                orderBy(sortFilter),
+                endBefore(firstVisible),
+                limitToLast(5)  
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else if(country !== "None" && revenue === "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                orderBy(sortFilter),
+                endBefore(firstVisible),
+                limitToLast(5)  
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else if(country === "None" && revenue !== "None"){
+            const getData = query(collection(db, "VehicleMake"),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                endBefore(firstVisible),
+                limitToLast(5)  
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+        else {
+            const getData = query(collection(db, "VehicleMake"),
+                where("Country", "==", country),
+                where("Revenue", ">", parseInt(revenue)),
+                orderBy("Revenue"),
+                endBefore(firstVisible),
+                limitToLast(5)  
+            );
+            const dataSnap = await getDocs(getData);
+            return dataSnap;
+        }
+
+        
     }
     getMakeByIdAsync = async (id) => {
         const getMakeById = db.collection("VehicleMake").doc(id);
         return await getDoc(getMakeById);
     }
     createMakeAsync = async (data) => {
-        await db.collection("VehicleMake").add({
+        const create = await db.collection("VehicleMake").add({
             Name: data.Name,
-            Abrv: data.Abrv
-        }).then(docRef => {
-            data.docId = docRef.id;
+            Abrv: data.Abrv,
+            Country: data.Country,
+            Revenue: data.Revenue
         })
+        data.docId = create.id;
         return await data;
     }
     deleteMakeASync = async (id) => {
@@ -64,6 +151,8 @@ class MakeService {
         await currMake.update({
             Name: data.Name,
             Abrv: data.Abrv,
+            Country: data.Country,
+            Revenue: data.Revenue
         })
     }
 }

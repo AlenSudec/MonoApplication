@@ -1,30 +1,24 @@
 import { makeAutoObservable } from "mobx";
 import ListStore from "./ListStore";
-
-class MakeStore {
+class ModelStore {
     data = [];
     results = [];
     showCreate = false;
     runOnce = false;
-
     constructor(){
-       makeAutoObservable(this);
+        makeAutoObservable(this);
     }
     setData(data){
         this.data = data;
     }
-    setResults(results){
-       this.results = results;
+    setRunOnce(){
+        this.runOnce = !this.runOnce;
     }
     setShowCreate(){
         this.showCreate = !this.showCreate;
-    }
-    setRunOnce(){
-        this.runOnce = !this.runOnce;
     }
     reRunGetMake(){
         ListStore.getMakeAsync();
     }
 }
-
-export default new MakeStore();
+export default new ModelStore();

@@ -14,10 +14,14 @@
     z-index: 10;
     margin-left: 80px;
     margin-top: 68px;
-    height: 200px;
+    height: 355px;
     animation: show 0.5s ease-in-out;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 2;
+}
+.container--right{
+    margin-left: 660px;
+    margin-top: 405px;
 }
 .create-form {
     display: flex;
@@ -37,6 +41,10 @@
     font-size: 18px;
     font-weight: 600;
     color: #006d77;
+}
+.create-label--info{
+    font-size: 14px;
+    color: #3d949c;
 }
 .create-input {
     border: none;
