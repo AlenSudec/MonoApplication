@@ -3,6 +3,15 @@ import { getDoc, where, query, collection, limit, getDocs, startAfter, endBefore
 
 class MakeService {
 
+    //check for models that have certain make
+    checkModels = async (id) => {
+        const getModels =  query(collection(db, "VehicleModel"),
+            where("MakeId", "==", id)
+        );
+        const dataSnap = await getDocs(getModels);
+        return dataSnap;
+    }
+
     //init pagination
     getMakeAsync = async (sortFilter, ascOrDesc, revenue, country) => {
         if(country === "None" && revenue === "None"){

@@ -13,7 +13,6 @@ const MakeHome = observer(() => {
     return(
         <div className="container">
             <div className="header">
-                
                 <h1 className="header__title">Make List</h1>
                 <div className="header__create">
                     <button 
@@ -33,7 +32,7 @@ const MakeHome = observer(() => {
             <List 
                 data={MakeStore.data} 
                 msg="No car makes found, add them by using top-right button 'Add make'"
-                headers={["Name","Abrv","Country","Revenue(bil.)"]}
+                headers={["Name","Abrv","Country","Revenue"]}
                 store = {ListStore}
                 itemComponent = {Item}
             />

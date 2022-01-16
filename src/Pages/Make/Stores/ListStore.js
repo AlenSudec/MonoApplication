@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import makeService from "../../../Common/Service/makeService";
 import MakeStore from "./MakeStore";
 
+
 class ListStore {
     results = [];
     lastVisible = null;
@@ -10,14 +11,23 @@ class ListStore {
     ascOrDesc = "asc";
     countryFilter = "None";
     revenueFilter = "None";
+    nextButtonState = false;
+    backButtonState = true;
     constructor(){
         makeAutoObservable(this);
         this.getMakeAsync();
+    }
+    setNextButtonState(state) {
+        this.nextButtonState = state;
+    }
+    setBackButtonState(state){
+        this.backButtonState = state;
     }
     getMakeAsync = async (frwrd, bcwrd) => {
         if(frwrd){
              //NEXT QUERY
             const resultMake = await makeService.getMakeNextPageAsync(this.lastVisible,this.sortFilter, this.revenueFilter, this.countryFilter);
+            this.setBackButtonState(false);
             if(resultMake.docs.length > 0){
                 this.lastVisible = resultMake.docs[resultMake.docs.length-1];
                 this.firstVisible = resultMake.docs[resultMake.docs.length - (resultMake.docs.length-1)-1];
@@ -33,9 +43,16 @@ class ListStore {
                     this.results.push(result);
                 })
                 MakeStore.setData(this.results);
+                //check data for next page
+                const resultMakeNext = await makeService.getMakeNextPageAsync(this.lastVisible,this.sortFilter, this.revenueFilter, this.countryFilter);
+                if(resultMakeNext.docs.length === 0){
+                    this.setNextButtonState(true);
+                }
             }
+
             else {
                 alert("You are on the last page");
+                this.setButtonState(true);
             }
             
         }
@@ -55,14 +72,17 @@ class ListStore {
                     }
                     this.results.push(result);
                 })
+                this.setNextButtonState(false);
                 MakeStore.setData(this.results);
-            }
-            else {
-                alert("You are on the first page");
+                //check data on backpage
+                const resultMakeBack = await makeService.getMakeBackPageAsync(this.firstVisible,this.sortFilter, this.revenueFilter, this.countryFilter);
+                if(resultMakeBack.docs.length === 0){
+                    this.setBackButtonState(true);
+                }
             }
         }
         else {
-            //INIT QUERY
+            //INIT QUERY OR FIRST PAGE
             const resultMake = await makeService.getMakeAsync(this.sortFilter, this.ascOrDesc, this.revenueFilter, this.countryFilter);
             this.lastVisible = resultMake.docs[resultMake.docs.length-1];
             this.results = [];
@@ -77,12 +97,22 @@ class ListStore {
                 this.results.push(result);
             })
             MakeStore.setData(this.results);
+             //check data for next page
+             const resultMakeNext = await makeService.getMakeNextPageAsync(this.lastVisible,this.sortFilter, this.revenueFilter, this.countryFilter);
+             if(resultMakeNext.docs.length === 0){
+                 this.setNextButtonState(true);
+             }
+             else {
+                 this.setNextButtonState(false);
+             }
         }
     }
     createMakeAsync = async (data) => {
         await makeService.createMakeAsync(data);
         alert("Make has been added");
         this.getMakeAsync();
+        MakeStore.addToAllMakesAsync(data);
+
     }
     //List functions
     handleClick = () => {
@@ -118,11 +148,7 @@ class ListStore {
         this.setRevenueFilter(e.target.value);
     }
     setSortFilter(filter){
-        if(this.sortFilter === filter){
-            this.setAscOrDesc();
-        }
         this.sortFilter = filter;
-        
         this.getMakeAsync(false,false);
     }
     setAscOrDesc(){

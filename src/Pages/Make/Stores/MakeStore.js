@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import ListStore from "./ListStore";
+import MainStore from "../../../Common/Store/MainStore";
 
 class MakeStore {
     data = [];
@@ -24,6 +25,18 @@ class MakeStore {
     }
     reRunGetMake(){
         ListStore.getMakeAsync();
+    }
+    reRunGetMakesAsync = () => {
+        MainStore.reRunGetMakesAsync();
+    }
+    addToAllMakesAsync = (data) => {
+        MainStore.addToAllMakesAsync(data);
+    }
+    removeFromAllMakes = (id) => {
+        MainStore.removeFromAllMakes(id);
+    }
+    updateAllMakes = (data) => {
+        MainStore.updateAllMakes(data);
     }
 }
 

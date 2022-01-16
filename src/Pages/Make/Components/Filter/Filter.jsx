@@ -1,4 +1,5 @@
 import ListStore from "../../Stores/ListStore";
+import {Observer} from "mobx-react";
 import "./Filter.css";
 const Filter = () => {
     const countries = ["None","Germany","France","Italy","England"]; //etc
@@ -15,28 +16,56 @@ const Filter = () => {
             <div className="filters">
                 <div className="filter">
                     <label className="filter__label label--mg">Country:</label>
-                    <select defaultValue={countries[0]} onChange={ListStore.handleChangeCountry} name="country" id="country">
+                    <Observer>{()=>
+                        <select 
+                            value={ListStore.countryFilter} 
+                            onChange={ListStore.handleChangeCountry}
+                        >
                             {countries.map(country => 
-                                <option value={country}>
+                                <option key={country} value={country}>
                                     {country}
                                 </option>
                             )}
                         </select>
+                        }
+                    </Observer>
+                    
                 </div>
                 <div className="filter">
                     <label className="filter__label">Revenue:</label>
-                    <select defaultValue={revenues[0]} onChange={ListStore.handleChangeRevenue} name="abrv" id="abrv">
-                        {revenues.map(revenue => 
-                            <option value={revenue.data}>
-                                {revenue.text}
-                            </option>
+                    <Observer>{()=>
+                        <select 
+                            value={ListStore.revenueFilter} 
+                            onChange={ListStore.handleChangeRevenue}
+                        >
+                            {revenues.map(revenue => 
+                                <option key={revenue.data} value={revenue.data}>
+                                    {revenue.text}
+                                </option>
                             )}
-                    </select>
+                        </select>
+                        }
+                    </Observer>
+                   
                 </div>
             </div>
             <div className="filter__buttons">
-                <button className="filter__btn" onClick={() => ListStore.getMakeAsync(false,false)}>Filter</button>
-                <button className="filter__btn" onClick={() => {ListStore.setCountryFilter("None"); ListStore.setRevenueFilter("None"); ListStore.getMakeAsync(false,false); }}>Reset</button>
+                <button 
+                    className="filter__btn" 
+                    onClick={() => ListStore.getMakeAsync(false,false)}
+                >
+                    Filter
+                </button>
+                <button 
+                    className="filter__btn" 
+                    onClick={() => {
+                        ListStore.setCountryFilter("None"); 
+                        ListStore.setRevenueFilter("None"); 
+                        ListStore.getMakeAsync(false,false); 
+                    }}
+                >
+                    Reset
+                </button>
             </div>
             
         </div> 

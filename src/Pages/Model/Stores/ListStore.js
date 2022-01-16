@@ -3,20 +3,23 @@ import modelService from "../../../Common/Service/modelService";
 import ModelStore from "./ModelStore";
 
 class ListStore {
-    allMakes = [];
     lastVisible = null;
     firstVisible = null;
     sortFilter = "Name";
     ascOrDesc = "asc";
     yearFilter = "None";
     makeFilter = "None";
+    nextButtonState = false;
+    backButtonState = true;
     constructor(){
         makeAutoObservable(this);
         this.getMakeAsync();
-        this.getAllMakesAsync();
     }
-    setAllMakes(data) {
-        this.allMakes = data;
+    setNextButtonState(state){
+        this.nextButtonState = state;
+    }
+    setBackButtonState(state){
+        this.backButtonState = state;
     }
     setYearFilter(year){
         this.yearFilter = year;
@@ -37,26 +40,8 @@ class ListStore {
         this.setMakeFilter(e.target.value);
     }
     setSortFilter(filter){
-        if(this.sortFilter === filter){
-            this.setAscOrDesc();
-        }
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
-    }
-    //GET ALL MAKES FOR FILTER
-    getAllMakesAsync = async () => {
-        const getMakes = await modelService.getAllMakesAsync();
-        this.results = [{Name: "None", docId: "None"}];
-        getMakes.forEach(e => {
-            let result = {
-                docId : e.id,
-                Name : e.data().Name
-            }
-            this.results.push(result);
-        })
-
-        this.setAllMakes(this.results);
-        return this.allMakes;
     }
 
     handleSubmit = (e,props) => {
@@ -67,6 +52,7 @@ class ListStore {
             Name: e.target.modelName.value,
             Abrv: props.Abrv,
             MakeId: props.id,
+            MakeName : props.Name,
             modelYear : e.target.modelYear.value
         }
         this.createAsync(data);
@@ -80,6 +66,7 @@ class ListStore {
     getMakeAsync = async(frwrd, bcwrd) => {
         if(frwrd){
             const resultMake = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+            this.setBackButtonState(false);
             if(resultMake.docs.length > 0){
                 this.lastVisible = resultMake.docs[resultMake.docs.length-1];
                 this.firstVisible = resultMake.docs[resultMake.docs.length - (resultMake.docs.length-1)-1];
@@ -90,14 +77,17 @@ class ListStore {
                         Abrv : doc.data().Abrv,
                         Name : doc.data().Name,
                         MakeId : doc.data().MakeId,
+                        MakeName : doc.data().MakeName,
                         Year : doc.data().Year
                     }
                     this.results.push(result);
                 })
                 ModelStore.setData(this.results);
-            }
-            else {
-                alert("You are on the last page");
+                //check data for next page
+                const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+                if(resultMakeNext.docs.length === 0){
+                    this.setNextButtonState(true);
+                }
             }
         }
         else if(bcwrd){
@@ -112,14 +102,18 @@ class ListStore {
                         Abrv : doc.data().Abrv,
                         Name : doc.data().Name,
                         MakeId : doc.data().MakeId,
+                        MakeName : doc.data().MakeName,
                         Year : doc.data().Year
                     }
                     this.results.push(result);
                 })
+                this.setNextButtonState(false);
                 ModelStore.setData(this.results);
-            }
-            else {
-                alert("You are on the first page");
+                //check data on backpage
+                const resultMakeBack = await modelService.getBackPageAsync(this.firstVisible, this.sortFilter,this.yearFilter,this.makeFilter);
+                if(resultMakeBack.docs.length === 0){
+                    this.setBackButtonState(true);
+                }
             }
         }
         else {
@@ -132,11 +126,21 @@ class ListStore {
                     Abrv : doc.data().Abrv,
                     Name : doc.data().Name,
                     MakeId : doc.data().MakeId,
+                    MakeName : doc.data().MakeName,
                     Year : doc.data().Year
                 }
                 this.results.push(result);
             })
             ModelStore.setData(this.results);
+            this.setNextButtonState(false);
+            //check data for next page
+            const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+            if(resultMakeNext.docs.length === 0){
+                this.setNextButtonState(true);
+            }
+            else {
+                this.setNextButtonState(false);
+            }
         }
     }
 }

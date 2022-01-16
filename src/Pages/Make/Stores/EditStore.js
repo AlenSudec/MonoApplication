@@ -7,10 +7,34 @@ class EditStore {
     contents = [];
     data = null;
     currDataId = "";
+    showConf = false;
+    hasModels = false;
+    showCreate = false;
     constructor(){
         makeAutoObservable(this);
     }
-    
+    setShowCreate(){
+        this.showCreate = !this.showCreate;
+    }
+    setShowConf(){
+        this.showConf = !this.showConf;
+    }
+    setHasModels(value){
+        this.hasModels = value;
+    }
+    handleClick = () => {
+        this.setShowCreate();
+    }
+    //check if models have make
+    checkModels = async (id) => {
+        const resultMake = await makeService.checkModels(id);
+        if(resultMake.docs.length > 0){
+            this.setHasModels(true);
+        }
+        else {
+            this.setHasModels(false);
+        }
+    }
     getMakeByIdAsync = async (id) => {
         const resultMake = await makeService.getMakeByIdAsync(id);
         this.currentData = {
@@ -46,6 +70,7 @@ class EditStore {
         }
         MakeStore.setData(this.contents);
         this.contents = [];
+        MakeStore.updateAllMakes(data);
     }
     deleteMakeAsync = async (id) => {
         await makeService.deleteMakeASync(id);
@@ -57,6 +82,7 @@ class EditStore {
         MakeStore.setData(this.contents);
         this.contents = [];
         MakeStore.reRunGetMake();
+        MakeStore.removeFromAllMakes(id);
     }
    
     setCurrData(currentData){
@@ -101,6 +127,9 @@ class EditStore {
         this.updateMakeAsync(this.data);
         this.setCurrData(this.data);
         MakeStore.setRunOnce();
+    }
+    handleClickOutside = () => {
+        this.setShowCreate();
     }
 }
 export default new EditStore();

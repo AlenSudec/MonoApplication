@@ -6,21 +6,27 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import EditStore from "../../Stores/EditStore";
 import ModelStore from "../../Stores/ModelStore";
+import Confirmation from "../Confirmation";
 
 const EditModel = observer(() => {
     const navigate = useNavigate();
     let { id } = useParams();
     if(ModelStore.runOnce === false){
         EditStore.getByIdAsync(id);
+        EditStore.getAllMakesAsync();
         ModelStore.setRunOnce();
     }
     return(
         <div className="edit-container">
+            {EditStore.showConf ? (<Confirmation/>) : ("")}
         <div className="edit__header">
             <div className="header__title">
                 <button 
                     className="header__back" 
-                    onClick={()=>{EditStore.handleBack(); navigate("/models")}}
+                    onClick={()=>{ 
+                        EditStore.handleBack(); 
+                        navigate("/models")
+                    }}
                 >
                     <FontAwesomeIcon 
                         icon={faAngleDoubleLeft} 
@@ -34,7 +40,7 @@ const EditModel = observer(() => {
                 <div>Model ID: {EditStore.currData.docId}</div>
                 <button 
                     className="delete-btn" 
-                    onClick={() => { EditStore.deleteMake(); navigate("/models"); }}
+                    onClick={() => { EditStore.setShowConf() }}
                 >
                     <FontAwesomeIcon 
                         icon={faTrash} 
@@ -45,11 +51,15 @@ const EditModel = observer(() => {
         </div>
             <form 
                 className="edit__form" 
-                onSubmit={(e) => { EditStore.handleUpdate(e); navigate("/models");}}
+                onSubmit={(e) => { 
+                    EditStore.handleUpdate(e); 
+                    navigate("/models");
+                }}
             >
                 <div className="form__child">
                     <label className="form__label">Name:</label>
                     <input
+                        type="text"
                         required
                         key={EditStore.currData.Name}
                         name="Name"
@@ -63,31 +73,30 @@ const EditModel = observer(() => {
                         required
                         key={EditStore.currData.Year}
                         name="Year"
+                        type="number"
                         className="form__input"
                         defaultValue={EditStore.currData.Year}
                     />
                 </div>
                 <div className="form__child">
-                    <label className="form__label">Make Abrv:</label>
-                    <input
-                        required
-                        key={EditStore.currData.Abrv}
-                        name="Abrv"
-                        className="form__input"
-                        defaultValue={EditStore.currData.Abrv}
-                        
-                    />
-                </div>
-                <div className="form__child">
-                    <label className="form__label">Make Id:</label>
-                    <input
-                        required
-                        key={EditStore.currData.MakeId}
+                    <label className="form__label form__label--select1">Make: </label>
+                    <select 
+                        value={EditStore.selectValue} 
+                        onChange={EditStore.handleOnChange} 
                         name="MakeId"
-                        className="form__input"
-                        defaultValue={EditStore.currData.MakeId}
-                        
-                    />
+                    >
+                        {EditStore.allMakes.map(make => 
+                            <option value={[
+                                    make.docId,
+                                    make.Abrv,
+                                    make.Name
+                                ]} 
+                                key={make.docId}
+                            >
+                                {make.Name}
+                            </option>
+                        )}
+                    </select>
                 </div>
                 <button 
                     className="form__btn" 

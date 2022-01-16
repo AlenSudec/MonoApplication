@@ -7,8 +7,36 @@ class EditStore {
     contents = [];
     data = null;
     currDataId = "";
+    allMakes = [];
+    selectValue = [];
+    showConf = false;
     constructor(){
         makeAutoObservable(this);
+    }
+    setShowConf(){
+        this.showConf = !this.showConf;
+    }
+    setSelectValue(value){
+        this.selectValue = value;
+    }
+    handleOnChange = (e) => {
+        this.setSelectValue(e.target.value);
+    }
+    getAllMakesAsync = async () => {
+        const getMakes = await modelService.getAllMakesAsync();
+        this.results = [];
+        getMakes.forEach(e => {
+            let result = {
+                docId: e.id,
+                Name : e.data().Name,
+                Abrv : e.data().Abrv
+            }
+            this.results.push(result);
+        })
+        this.setAllMakes(this.results);
+    }
+    setAllMakes(data){
+        this.allMakes = data;
     }
     getByIdAsync = async (id) => {
         const resultMake = await modelService.getByIdAsync(id);
@@ -17,10 +45,12 @@ class EditStore {
             Name : resultMake.data().Name,
             Abrv : resultMake.data().Abrv,
             MakeId : resultMake.data().MakeId,
-            Year : resultMake.data().Year
+            Year : resultMake.data().Year,
+            MakeName : resultMake.data().MakeName
         }
         this.setCurrData(this.currentData);
         this.setCurrDataId(id);
+        this.setSelectValue([this.currentData.MakeId, this.currentData.Abrv, this.currentData.MakeName]);
         this.contents = [];
         ModelStore.data.forEach(e => {
             let content = {
@@ -28,17 +58,22 @@ class EditStore {
                 Name : e.Name,
                 Abrv : e.Abrv,
                 MakeId : e.MakeId,
-                Year : e.Year
+                Year : e.Year,
+                MakeName : e.MakeName
             }
             this.contents.push(content);
         })
     }
     updateAsync = async (data) => {
         await modelService.updateAsync(data);
+        
         for(let i = 0; i < this.contents.length; i++){
             if(this.contents[i].docId === data.docId){
                 this.contents[i].Name = data.Name;
                 this.contents[i].Year = data.Year;
+                this.contents[i].Abrv = data.Abrv;
+                this.contents[i].MakeId = data.MakeId;
+                this.contents[i].MakeName = data.MakeName; 
             }
         }
         ModelStore.setData(this.contents);
@@ -46,10 +81,14 @@ class EditStore {
     }
     handleUpdate = (e) => {
         e.preventDefault();
+        let dataGet = e.target.MakeId.value.split(",");
         this.data = {
             docId : this.currDataId,
             Name : e.target.Name.value,
-            Year : parseInt(e.target.Year.value)
+            Year : parseInt(e.target.Year.value),
+            MakeId : dataGet[0],
+            Abrv : dataGet[1],
+            MakeName : dataGet[2]
         }
         this.updateAsync(this.data);
         this.setCurrData(this.data);
@@ -76,6 +115,7 @@ class EditStore {
         ModelStore.setData(this.contents);
         this.contents = [];
         ModelStore.reRunGetMake();
+
     }
     deleteMake = ()  => {
         this.deleteAsync(this.currDataId);

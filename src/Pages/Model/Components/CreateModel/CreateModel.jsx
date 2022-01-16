@@ -2,18 +2,35 @@ import { observer } from "mobx-react";
 import ListStore from "../../Stores/ListStore";
 
 const CreateModel = observer((props) => {
-    const years = ["None", 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
+    const years = [
+        "None", 
+        2010, 
+        2011, 
+        2012, 
+        2013, 
+        2014, 
+        2015, 
+        2016, 
+        2017, 
+        2018, 
+        2019, 
+        2020
+    ];
+
     return(
         <>
         <div
             className="create-filler"
-            onClick={ListStore.handleClickOutside}
+            onClick={props.store.handleClickOutside}
         ></div>
         <div className="create-container container--right">
             <div className="create-arrow"></div>
             <form 
                 className="create-form" 
-                onSubmit={(e) => ListStore.handleSubmit(e,props.data)}
+                onSubmit={(e) => { 
+                    ListStore.handleSubmit(e,props.data); 
+                    props.store.handleClickOutside() 
+                }}
             >
                 <div className="create-info">
                     <label className="create-label">Name:</label>
@@ -31,7 +48,7 @@ const CreateModel = observer((props) => {
                         name="modelYear"
                     >
                         {years.map(year => 
-                            <option value={year}>{year}</option>
+                            <option key={year} value={year}>{year}</option>
                         )}
                     </select>
                 </div>

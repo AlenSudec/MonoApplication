@@ -11,21 +11,35 @@ const List = observer((props) => {
         <>
             {props.data.length !== 0 ? (
                 <div className="list">
-                    <ListHeader headers={props.headers} store={props.store}/>
+                    <ListHeader 
+                        headers={props.headers} 
+                        store={props.store}
+                    />
                     <div className="list list--fixed-size">
                         {props.data.map(item =>
-                            <ItemComponent item = {item} key = {item.docId}/>
+                            <ItemComponent 
+                                item = {item} 
+                                key = {item.docId}
+                            />
                         )}
                     </div>
                     <div className="list__pagination">
-                        <button className="list__back" onClick={() => props.store.getMakeAsync(false, true)}>
+                        <button 
+                            disabled={props.store.backButtonState} 
+                            className={"list__back " + props.store.backButtonState} 
+                            onClick={() => props.store.getMakeAsync(false, true)}
+                        >
                             <FontAwesomeIcon
                                 icon={faArrowLeft}
                                 className="back__icon1"
                             />
                             Back
                         </button>
-                        <button className="list__forward" onClick={()=> props.store.getMakeAsync(true,false)}>
+                        <button 
+                            disabled={props.store.nextButtonState} 
+                            className={"list__forward " + props.store.nextButtonState} 
+                            onClick={()=> props.store.getMakeAsync(true,false)}
+                        >
                             Forward
                             <FontAwesomeIcon
                                 icon={faArrowRight}

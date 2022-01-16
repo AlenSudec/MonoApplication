@@ -8,9 +8,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import "./Edit.css";
 import CreateModel from "../../../Model/Components/CreateModel";
-import ListStore from "../../../Model/Stores/ListStore";
-import ModelStore from "../../../Model/Stores/ModelStore";
 import MakeStore from "../../Stores/MakeStore";
+import Confirmation from "../Confirmation/Confirmation";
 
 
 const Edit = observer(() => {
@@ -19,9 +18,13 @@ const Edit = observer(() => {
     if(MakeStore.runOnce === false){
         EditStore.getMakeByIdAsync(id);
         MakeStore.setRunOnce();
-    }  
+        EditStore.checkModels(id);
+    }
+    const countries = ["None","Germany","France","Italy","England"];
+
     return (
         <div className="edit-container">
+            {EditStore.showConf ? (<Confirmation/>) : ("")}
             <div className="edit__header">
                 <div className="header__title">
                     <button 
@@ -35,7 +38,7 @@ const Edit = observer(() => {
                     </button>
                     <h1>Edit</h1>
                     <button
-                        onClick={ListStore.handleClick}
+                        onClick={EditStore.handleClick}
                         className="create__btn btn--left"
                     >
                         <FontAwesomeIcon
@@ -45,8 +48,15 @@ const Edit = observer(() => {
                         Add model
 
                     </button>
-                    {ModelStore.showCreate ? (
-                        <CreateModel data={{id : EditStore.currData.docId, Abrv : EditStore.currData.Abrv}}/>
+                    {EditStore.showCreate ? (
+                        <CreateModel 
+                            store = {EditStore} 
+                            data = {{
+                                id : EditStore.currData.docId, 
+                                Abrv : EditStore.currData.Abrv, 
+                                Name : EditStore.currData.Name
+                            }}
+                        />
                     ) : ("")}
                     
                 </div>
@@ -55,7 +65,7 @@ const Edit = observer(() => {
                     <div>Make Id: {EditStore.currData.docId}</div>
                     <button 
                         className="delete-btn" 
-                        onClick={() => { EditStore.deleteMake(); navigate("/"); }}
+                        onClick = {() => { EditStore.setShowConf();}}
                     >
                         <FontAwesomeIcon 
                             icon={faTrash} 
@@ -74,6 +84,7 @@ const Edit = observer(() => {
                             required
                             key={EditStore.currData.Name}
                             name="Name"
+                            type="text"
                             className="form__input"
                             defaultValue={EditStore.currData.Name}
                         />
@@ -84,27 +95,43 @@ const Edit = observer(() => {
                             required
                             key={EditStore.currData.Abrv}
                             name="Abrv"
+                            type="text"
                             className="form__input"
                             defaultValue={EditStore.currData.Abrv}
                             
                         />
                     </div>
-                    <div className="form__child">
+                    {/* <div className="form__child">
                         <label className="form__label">Country:</label>
                         <input
                             required
                             key={EditStore.currData.Country}
                             name="Country"
+                            type="text"
                             className="form__input"
                             defaultValue={EditStore.currData.Country}
                             
                         />
+                    </div> */}
+                    <div className="form__child">
+                        <label className="form__label form__label--select">Country:</label>  
+                        <select 
+                            defaultValue={EditStore.currData.Country} 
+                            required 
+                            name="Country"
+                            className="form__input--select"
+                        >
+                            {countries.map(country => 
+                                <option key={country} value={country}>{country}</option>
+                            )}
+                        </select>  
                     </div>
                     <div className="form__child">
                         <label className="form__label">Revenue:</label>
                         <input
                             required
                             key={EditStore.currData.Revenue}
+                            type="number"
                             name="Revenue"
                             className="form__input"
                             defaultValue={EditStore.currData.Revenue}

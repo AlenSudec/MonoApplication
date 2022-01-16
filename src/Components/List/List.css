@@ -37,6 +37,11 @@
 .edit-make {
     text-decoration: none;
 }
+.true {
+    background-color: #bdb9b9 !important;
+    cursor: not-allowed !important;
+    color: black !important;
+}
 .list__child {
     /* min-width: 200px; */
     min-width: 280px;

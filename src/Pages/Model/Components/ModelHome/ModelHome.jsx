@@ -14,7 +14,7 @@ const ModelHome = observer(() => {
             <List
                 data={ModelStore.data}
                 msg="No car models found, add them inside 'Manufacturer list'"
-                headers={["Name", "Make Abrv","MakeId", "Year"]}
+                headers={["Name", "Abrv","MakeName", "Year"]}
                 store = {ListStore}
                 itemComponent = {Item}
             />

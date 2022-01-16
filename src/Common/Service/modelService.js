@@ -8,6 +8,7 @@ class ModelService {
             MakeId : data.MakeId,
             Name : data.Name,
             Abrv : data.Abrv,
+            MakeName : data.MakeName,
             Year : parseInt(data.modelYear)
         })
         data.docId = create.id;
@@ -152,7 +153,10 @@ class ModelService {
         const currModel = db.collection("VehicleModel").doc(data.docId);
         await currModel.update({
             Name : data.Name,
-            Year : data.Year
+            Year : data.Year,
+            MakeId : data.MakeId,
+            MakeName : data.MakeName,
+            Abrv : data.Abrv
         })
     }
     deleteAsync = async (id) => {

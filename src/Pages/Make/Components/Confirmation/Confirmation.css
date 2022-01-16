@@ -1,0 +1,74 @@
+.confirmation__bg {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    
+}  
+.confirmation__box {
+    background-color: white;
+    height: 300px;
+    width: 600px;
+    top: 195px;
+    left: 545px;
+    position: absolute;
+    z-index: 2;
+    margin-bottom: 300px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 16px 44px rgba(0, 0, 0, 0.2);
+
+}
+.conf__line {
+    height: 1px;
+    width: 96%;
+    background-color: #006d77;
+}
+.box__text {
+    padding-left: 25px;
+    padding-right: 20px;
+}
+.warning {
+    color: rgb(160, 33, 33);
+    font-weight: 600;
+}
+.goahead {
+    color: rgb(33, 160, 65);
+    font-weight: 600;
+}
+.box__btns {
+    position: relative;
+    margin-top: 75px;
+    display: flex;
+    flex-direction: row;
+    gap: 375px;
+}
+.btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    color:  white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+.btn--back {
+    background-color: #006d77;
+}
+.btn--back:hover{
+    background-color: #0daebd;
+}
+.btn--del {
+    background-color: rgb(160, 33, 33);
+}
+.btn--del:hover{
+    background-color: rgb(202, 92, 92);
+}

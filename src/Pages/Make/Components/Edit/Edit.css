@@ -96,6 +96,12 @@
 .header__back:hover > .back__icon {
     animation: slide--back 1s ease-in-out infinite;
 }
+.form__label--select{
+    margin-left: -92px;
+}
+.form__label--select1{
+    margin-left: -50px;
+}
 @keyframes slide--back {
     0%, 100% {
         margin-right: 0px;

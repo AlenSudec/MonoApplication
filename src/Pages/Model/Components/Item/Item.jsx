@@ -5,17 +5,19 @@ import ListStore from "../../Stores/ListStore";
 
 const Item = (props) => {
     return (
+        
         <Link
             to={"/models/" + props.item.docId}
             className="edit-make"
             onClick={ListStore.hideCreate}
             key={props.item.docId}
         >
+            
             <div className="list__make">
                 <div className="make__info">
                     <div className="list__child list__child--first">{props.item.Name}</div>
                     <div className="list__child">{props.item.Abrv}</div>
-                    <div className="list__child">{props.item.MakeId}</div>
+                    <div className="list__child">{props.item.MakeName}</div>
                     <div className="list__child">{props.item.Year}</div>
                 </div>
                 <div className="list__child list__child--last">

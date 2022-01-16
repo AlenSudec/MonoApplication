@@ -2,6 +2,7 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 10px;
+    box-shadow: 0px 16px 44px rgba(0, 0, 0, 0.4);
 }
 .filter__h3 {
     color: #114e53;
