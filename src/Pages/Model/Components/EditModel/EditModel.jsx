@@ -19,6 +19,7 @@ const EditModel = observer(() => {
     return(
         <div className="edit-container">
             {EditStore.showConf ? (<Confirmation/>) : ("")}
+            
         <div className="edit__header">
             <div className="header__title">
                 <button 

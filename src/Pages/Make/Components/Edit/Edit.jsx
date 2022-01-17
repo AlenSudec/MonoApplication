@@ -10,6 +10,7 @@ import "./Edit.css";
 import CreateModel from "../../../Model/Components/CreateModel";
 import MakeStore from "../../Stores/MakeStore";
 import Confirmation from "../Confirmation/Confirmation";
+import Notification from "../../../../Components/Notification";
 
 
 const Edit = observer(() => {
@@ -20,11 +21,12 @@ const Edit = observer(() => {
         MakeStore.setRunOnce();
         EditStore.checkModels(id);
     }
-    const countries = ["None","Germany","France","Italy","England"];
+    const countries = ["Germany","France","Italy","England"];
 
     return (
         <div className="edit-container">
             {EditStore.showConf ? (<Confirmation/>) : ("")}
+            {EditStore.showNotification ? (<Notification msg="New vehicle model has been added"/>) : ("")}
             <div className="edit__header">
                 <div className="header__title">
                     <button 
@@ -76,7 +78,16 @@ const Edit = observer(() => {
             </div>
                 <form 
                     className="edit__form" 
-                    onSubmit={(e) => { EditStore.handleUpdate(e); navigate("/");}}
+                    onSubmit={(e) => { 
+                        if(EditStore.hasModels){
+                            e.preventDefault();
+                            EditStore.setShowConf();
+                        }
+                        else {
+                            EditStore.handleUpdate(e); 
+                            navigate("/");
+                        }
+                    }}
                 >
                     <div className="form__child">
                         <label className="form__label">Name:</label>
@@ -101,25 +112,15 @@ const Edit = observer(() => {
                             
                         />
                     </div>
-                    {/* <div className="form__child">
-                        <label className="form__label">Country:</label>
-                        <input
-                            required
-                            key={EditStore.currData.Country}
-                            name="Country"
-                            type="text"
-                            className="form__input"
-                            defaultValue={EditStore.currData.Country}
-                            
-                        />
-                    </div> */}
                     <div className="form__child">
-                        <label className="form__label form__label--select">Country:</label>  
+                        <label className="form__label form__label--select">Country:</label>
+                        {console.log(EditStore.country)}
                         <select 
-                            defaultValue={EditStore.currData.Country} 
+                            value={EditStore.country} 
                             required 
                             name="Country"
                             className="form__input--select"
+                            onChange={EditStore.handleSelectChange}
                         >
                             {countries.map(country => 
                                 <option key={country} value={country}>{country}</option>
@@ -127,7 +128,7 @@ const Edit = observer(() => {
                         </select>  
                     </div>
                     <div className="form__child">
-                        <label className="form__label">Revenue:</label>
+                        <label className="form__label">Revenue(.bil):</label>
                         <input
                             required
                             key={EditStore.currData.Revenue}

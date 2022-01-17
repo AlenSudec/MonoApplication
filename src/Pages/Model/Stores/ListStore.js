@@ -30,7 +30,8 @@ class ListStore {
     createAsync = async (data) => {
         await modelService.createAsync(data);
         ModelStore.setShowCreate();
-        alert("dodano");
+        //tu
+        ModelStore.setShowNotification();
         this.getMakeAsync();
     }
     handleChangeYear = (e) => {

@@ -35,6 +35,7 @@ const MakeHome = observer(() => {
                 headers={["Name","Abrv","Country","Revenue"]}
                 store = {ListStore}
                 itemComponent = {Item}
+                notificationMsg="New vehicle make has been added"
             />
         </div>
         )

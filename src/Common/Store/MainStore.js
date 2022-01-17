@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import MakeStore from "../../Pages/Make/Stores/MakeStore";
 import ModelStore from "../../Pages/Model/Stores/ModelStore";
 
 class MainStore {
@@ -20,6 +21,9 @@ class MainStore {
     }
     updateAllMakes = (data) => {
         ModelStore.updateAllMakes(data);
+    }
+    setShowNotification = () => {
+        MakeStore.setShowNotification();
     }
 }
 export default new MainStore();

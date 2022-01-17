@@ -13,9 +13,16 @@ class ListStore {
     revenueFilter = "None";
     nextButtonState = false;
     backButtonState = true;
+    showNotification = false;
     constructor(){
         makeAutoObservable(this);
         this.getMakeAsync();
+    }
+    setShowNotification(){
+        this.showNotification = !this.showNotification;
+        setTimeout(() => {
+            this.showNotification = !this.showNotification
+        }, 1000);
     }
     setNextButtonState(state) {
         this.nextButtonState = state;
@@ -48,13 +55,7 @@ class ListStore {
                 if(resultMakeNext.docs.length === 0){
                     this.setNextButtonState(true);
                 }
-            }
-
-            else {
-                alert("You are on the last page");
-                this.setButtonState(true);
-            }
-            
+            } 
         }
         else if(bcwrd){
             const resultMake = await makeService.getMakeBackPageAsync(this.firstVisible,this.sortFilter, this.revenueFilter, this.countryFilter);
@@ -109,10 +110,10 @@ class ListStore {
     }
     createMakeAsync = async (data) => {
         await makeService.createMakeAsync(data);
-        alert("Make has been added");
+        // alert("Make has been added");
+        this.setShowNotification();
         this.getMakeAsync();
         MakeStore.addToAllMakesAsync(data);
-
     }
     //List functions
     handleClick = () => {

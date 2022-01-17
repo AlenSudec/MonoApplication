@@ -3,6 +3,7 @@ import ListStore from "../../../Make/Stores/ListStore";
 import "./Create.css";
 
 const Create = observer(() => {
+    const countries = ["Germany","France","Italy","England"];
     return (
         <>
         <div 
@@ -35,15 +36,18 @@ const Create = observer(() => {
                 </div>
                 <div className="create-info">
                     <label className="create-label">Country:</label>
-                    <input
-                        type="text"
+                    <select
                         required
                         name="makeCountry"
-                        className="create-input"
-                    />
+                    >
+                        {countries.map((country) => 
+                            <option key={country} value={country}>{country}</option>
+                        )}
+                        
+                    </select>
                 </div>
                 <div className="create-info">
-                    <label className="create-label">Revenue:</label>
+                    <label className="create-label">Revenue(.bil):</label>
                     <input
                         type="number"
                         required

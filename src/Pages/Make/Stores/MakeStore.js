@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import ListStore from "./ListStore";
 import MainStore from "../../../Common/Store/MainStore";
+import EditStore from "../Stores/EditStore";
+
 
 class MakeStore {
     data = [];
@@ -23,9 +24,6 @@ class MakeStore {
     setRunOnce(){
         this.runOnce = !this.runOnce;
     }
-    reRunGetMake(){
-        ListStore.getMakeAsync();
-    }
     reRunGetMakesAsync = () => {
         MainStore.reRunGetMakesAsync();
     }
@@ -37,6 +35,9 @@ class MakeStore {
     }
     updateAllMakes = (data) => {
         MainStore.updateAllMakes(data);
+    }
+    setShowNotification = () => {
+        EditStore.setShowNotification();
     }
 }
 

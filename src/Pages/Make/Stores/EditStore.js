@@ -10,8 +10,16 @@ class EditStore {
     showConf = false;
     hasModels = false;
     showCreate = false;
+    country = "None";
+    showNotification = false;
     constructor(){
         makeAutoObservable(this);
+    }
+    setShowNotification(){
+        this.showNotification = !this.showNotification;
+        setTimeout(()=> {
+            this.showNotification = !this.showNotification;
+        }, 2000);
     }
     setShowCreate(){
         this.showCreate = !this.showCreate;
@@ -46,6 +54,7 @@ class EditStore {
         }
         this.setCurrData(this.currentData);
         this.setCurrDataId(id);
+        this.setCurrDataCountry(this.currentData.Country);
         this.contents = []
         MakeStore.data.forEach(e => {
             let content = {
@@ -65,7 +74,7 @@ class EditStore {
                 this.contents[i].Name = data.Name;
                 this.contents[i].Abrv = data.Abrv;
                 this.contents[i].Country = data.Country;
-                this.contents[i].Revenue = data.Revenue;
+                this.contents[i].Revenue = parseInt(data.Revenue);
             }
         }
         MakeStore.setData(this.contents);
@@ -81,7 +90,6 @@ class EditStore {
         }
         MakeStore.setData(this.contents);
         this.contents = [];
-        MakeStore.reRunGetMake();
         MakeStore.removeFromAllMakes(id);
     }
    
@@ -90,6 +98,9 @@ class EditStore {
     }
     setCurrDataId(id){
         this.currDataId = id;
+    }
+    setCurrDataCountry(country){
+        this.country = country;
     }
     //edit functions
     handleBack = async () => {
@@ -122,11 +133,16 @@ class EditStore {
             Name : e.target.Name.value,
             Abrv : e.target.Abrv.value,
             Country : e.target.Country.value,
-            Revenue: e.target.Revenue.value
+            Revenue: parseInt(e.target.Revenue.value)
         }
         this.updateMakeAsync(this.data);
         this.setCurrData(this.data);
+        console.log(this.hasModels);
         MakeStore.setRunOnce();
+    }
+    handleSelectChange = (e) => {
+        console.log(e.target.value);
+        this.setCurrDataCountry(e.target.value);
     }
     handleClickOutside = () => {
         this.setShowCreate();

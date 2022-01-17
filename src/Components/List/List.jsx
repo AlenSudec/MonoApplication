@@ -4,11 +4,13 @@ import "./List.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ListHeader from "../ListHeader";
+import Notification from "../Notification";
 
 const List = observer((props) => {
     const ItemComponent = props.itemComponent;
     return(
         <>
+            {props.store.showNotification ? (<Notification msg={props.notificationMsg}/>) : ("")}
             {props.data.length !== 0 ? (
                 <div className="list">
                     <ListHeader 

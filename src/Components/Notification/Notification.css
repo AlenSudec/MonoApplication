@@ -1,0 +1,28 @@
+.notification {
+    position: absolute;
+    z-index: 10;
+    width: 300px;
+    height: 50px;
+    background-color: rgb(18, 170, 150);
+    top: 72px;
+    left: 730px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    animation: gone 7s ease;
+}
+.notification__text {
+    color: white;
+    font-weight: 600;
+}
+@keyframes gone {
+    0%,70%{
+        opacity: 1;
+    }
+    70%,100%{
+        opacity: 0;
+    }
+    
+}
