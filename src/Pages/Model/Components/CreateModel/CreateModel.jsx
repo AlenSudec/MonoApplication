@@ -53,12 +53,12 @@ const CreateModel = observer((props) => {
                     </select>
                 </div>
                 <div className="create-info">
-                    <label className="create-label">Make Id: </label>
-                    <label className="create-label create-label--info">{props.data.id}</label>
+                    <label className="create-label">Make Name: </label>
+                    <label className="create-label create-label--info">{props.data.Name}</label>
                     
                 </div>
                 <div className="create-info">
-                    <label className="create-label">Make: </label>
+                    <label className="create-label">Make Abrv: </label>
                     <label className="create-label create-label--info">{props.data.Abrv}</label>
                 </div>
                 <div>

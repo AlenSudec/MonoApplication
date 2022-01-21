@@ -1,7 +1,6 @@
 import {observer } from "mobx-react";
 import ListStore from "../../Stores/ListStore";
 import List from "../../../../Components/List";
-import ModelStore from "../../Stores/ModelStore";
 import Item from "../Item";
 import Filter from "../Filter";
 const ModelHome = observer(() => {
@@ -12,7 +11,7 @@ const ModelHome = observer(() => {
             </div>
             <Filter/>
             <List
-                data={ModelStore.data}
+                data={ListStore.getModelStoreData()}
                 msg="No car models found, add them inside 'Make list'"
                 headers={["Name", "Abrv","MakeName", "Year"]}
                 store = {ListStore}

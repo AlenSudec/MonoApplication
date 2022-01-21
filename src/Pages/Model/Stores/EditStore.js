@@ -22,6 +22,12 @@ class EditStore {
     handleOnChange = (e) => {
         this.setSelectValue(e.target.value);
     }
+    setRunOnce(){
+        ModelStore.setRunOnce();
+    }
+    getRunOnce(){
+        return ModelStore.runOnce;
+    }
     getAllMakesAsync = async () => {
         const getMakes = await modelService.getAllMakesAsync();
         this.results = [];

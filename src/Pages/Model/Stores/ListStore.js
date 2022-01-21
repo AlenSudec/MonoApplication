@@ -27,10 +27,15 @@ class ListStore {
     setMakeFilter(make){
         this.makeFilter = make;
     }
+    getAllMakes(){
+        return ModelStore.allMakes;
+    }
+    getModelStoreData(){
+        return ModelStore.data;
+    }
     createAsync = async (data) => {
         await modelService.createAsync(data);
         ModelStore.setShowCreate();
-        //tu
         ModelStore.setShowNotification();
         this.getMakeAsync();
     }

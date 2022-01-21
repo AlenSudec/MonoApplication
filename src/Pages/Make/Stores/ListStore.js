@@ -30,6 +30,12 @@ class ListStore {
     setBackButtonState(state){
         this.backButtonState = state;
     }
+    getMakeStoreData(){
+        return MakeStore.data;
+    }
+    getMakeStoreShowCreate(){
+        return MakeStore.showCreate;
+    }
     getMakeAsync = async (frwrd, bcwrd) => {
         if(frwrd){
              //NEXT QUERY

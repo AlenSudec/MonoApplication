@@ -5,16 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import EditStore from "../../Stores/EditStore";
-import ModelStore from "../../Stores/ModelStore";
 import Confirmation from "../Confirmation";
 
 const EditModel = observer(() => {
     const navigate = useNavigate();
     let { id } = useParams();
-    if(ModelStore.runOnce === false){
+    if(EditStore.getRunOnce() === false){
         EditStore.getByIdAsync(id);
         EditStore.getAllMakesAsync();
-        ModelStore.setRunOnce();
+        EditStore.setRunOnce();
     }
     return(
         <div className="edit-container">
@@ -88,10 +87,10 @@ const EditModel = observer(() => {
                     >
                         {EditStore.allMakes.map(make => 
                             <option value={[
-                                    make.docId,
-                                    make.Abrv,
-                                    make.Name
-                                ]} 
+                                make.docId,
+                                make.Abrv,
+                                make.Name
+                            ]}
                                 key={make.docId}
                             >
                                 {make.Name}

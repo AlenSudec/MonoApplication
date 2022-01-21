@@ -15,13 +15,13 @@ const Confirmation = () => {
                 {EditStore.hasModels ? (
                     <div className="instructions">
                         <p className="warning">This Vehicle Make currently has Vehicle Models that are connected to it.</p>
-                        <p>To be able to edit or delete this Vehicle Make, all Vehicle Models that are connected with this Make have to be deleted.</p>
+                        <p>To be able to delete this Vehicle Make, all Vehicle Models that are connected with this Make have to be deleted.</p>
                     </div>
                     
                 ) : (
                     <div className="instructions">
                         <p className="goahead">There are no Vehicle Models connected to this Vehicle Make.</p>
-                        <p>You can now safely edit or delete this Vehicle Make.</p>
+                        <p>You can now safely delete this Vehicle Make.</p>
                     </div>
                 )}
                 

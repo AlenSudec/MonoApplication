@@ -3,12 +3,9 @@ import { observer } from "mobx-react";
 import EditStore from "../../Stores/EditStore";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faTrash, faAngleDoubleLeft  } from "@fortawesome/free-solid-svg-icons";
 import "./Edit.css";
 import CreateModel from "../../../Model/Components/CreateModel";
-import MakeStore from "../../Stores/MakeStore";
 import Confirmation from "../Confirmation/Confirmation";
 import Notification from "../../../../Components/Notification";
 
@@ -16,9 +13,9 @@ import Notification from "../../../../Components/Notification";
 const Edit = observer(() => {
     const navigate = useNavigate();
     let { id } = useParams();
-    if(MakeStore.runOnce === false){
+    if(EditStore.getRunOnce() === false){
         EditStore.getMakeByIdAsync(id);
-        MakeStore.setRunOnce();
+        EditStore.setRunOnce();
         EditStore.checkModels(id);
     }
     const countries = ["Germany","France","Italy","England"];
@@ -79,14 +76,8 @@ const Edit = observer(() => {
                 <form 
                     className="edit__form" 
                     onSubmit={(e) => { 
-                        if(EditStore.hasModels){
-                            e.preventDefault();
-                            EditStore.setShowConf();
-                        }
-                        else {
-                            EditStore.handleUpdate(e); 
-                            navigate("/");
-                        }
+                        EditStore.handleUpdate(e); 
+                        navigate("/");
                     }}
                 >
                     <div className="form__child">
@@ -114,7 +105,6 @@ const Edit = observer(() => {
                     </div>
                     <div className="form__child">
                         <label className="form__label form__label--select">Country:</label>
-                        {console.log(EditStore.country)}
                         <select 
                             value={EditStore.country} 
                             required 

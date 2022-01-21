@@ -27,6 +27,9 @@ class MakeStore {
     reRunGetMakesAsync = () => {
         MainStore.reRunGetMakesAsync();
     }
+    getAllModels = () => {
+        MainStore.getAllModels();
+    }
     addToAllMakesAsync = (data) => {
         MainStore.addToAllMakesAsync(data);
     }

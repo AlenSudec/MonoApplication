@@ -2,7 +2,6 @@ import ListStore from "../../Stores/ListStore"
 import Create from "../Create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle} from "@fortawesome/free-solid-svg-icons";
-import MakeStore from "../../Stores/MakeStore";
 import { observer } from "mobx-react";
 import List from "../../../../Components/List";
 import Filter from "../Filter/Filter";
@@ -25,12 +24,12 @@ const MakeHome = observer(() => {
                         />
                         Add make         
                     </button>
-                    {MakeStore.showCreate ? (<Create />) : ("")}
+                    {ListStore.getMakeStoreShowCreate() ? (<Create />) : ("")}
                 </div>
             </div>
             <Filter/>
             <List 
-                data={MakeStore.data} 
+                data={ListStore.getMakeStoreData()}
                 msg="No car makes found, add them by using top-right button 'Add make'"
                 headers={["Name","Abrv","Country","Revenue"]}
                 store = {ListStore}

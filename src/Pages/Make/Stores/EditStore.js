@@ -33,6 +33,12 @@ class EditStore {
     handleClick = () => {
         this.setShowCreate();
     }
+    getRunOnce(){
+        return MakeStore.runOnce;
+    }
+    setRunOnce(){
+        MakeStore.setRunOnce();
+    }
     //check if models have make
     checkModels = async (id) => {
         const resultMake = await makeService.checkModels(id);
@@ -80,6 +86,7 @@ class EditStore {
         MakeStore.setData(this.contents);
         this.contents = [];
         MakeStore.updateAllMakes(data);
+        MakeStore.getAllModels();
     }
     deleteMakeAsync = async (id) => {
         await makeService.deleteMakeASync(id);
@@ -137,11 +144,9 @@ class EditStore {
         }
         this.updateMakeAsync(this.data);
         this.setCurrData(this.data);
-        console.log(this.hasModels);
         MakeStore.setRunOnce();
     }
     handleSelectChange = (e) => {
-        console.log(e.target.value);
         this.setCurrDataCountry(e.target.value);
     }
     handleClickOutside = () => {

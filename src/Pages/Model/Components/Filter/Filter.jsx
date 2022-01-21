@@ -1,5 +1,4 @@
 import ListStore from "../../Stores/ListStore";
-import ModelStore from "../../Stores/ModelStore";
 import { Observer } from "mobx-react";
 
 const Filter = () => {
@@ -43,13 +42,16 @@ const Filter = () => {
                     <label className="filter__label">Make: </label>
                     <Observer>
                         {()=>
-                            ModelStore.allMakes.length !== 0 ? (
-                                <select 
-                                    value={ListStore.makeFilter} 
+                            ListStore.getAllMakes().length !== 0 ? (
+                                <select
+                                    value={ListStore.makeFilter}
                                     onChange={ListStore.handleChangeMake}
                                 >
-                                    {ModelStore.allMakes.map(make =>
-                                        <option key={make.docId} value={make.docId}>{make.Name}</option>
+                                    {ListStore.getAllMakes().map(make => 
+                                        <option key={make.docId} value={make.docId}>
+                                            {make.Name}
+                                            {console.log(make)}
+                                        </option>
                                     )}
                                 </select>
                             ) : ("")

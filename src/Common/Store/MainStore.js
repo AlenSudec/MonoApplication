@@ -25,5 +25,8 @@ class MainStore {
     setShowNotification = () => {
         MakeStore.setShowNotification();
     }
+    getAllModels = () => {
+        ModelStore.reRunGetMake();
+    }
 }
 export default new MainStore();

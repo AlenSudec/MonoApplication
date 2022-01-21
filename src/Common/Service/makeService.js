@@ -1,6 +1,7 @@
 import db from "./firebase";
 import { getDoc, where, query, collection, limit, getDocs, startAfter, endBefore, limitToLast, orderBy } from "firebase/firestore";
 
+
 class MakeService {
 
     //check for models that have certain make
@@ -163,6 +164,17 @@ class MakeService {
             Country: data.Country,
             Revenue: data.Revenue
         })
+        const getAllModelsWithCurrMake = db.collection("VehicleModel").where("MakeId", "==", data.docId);
+        const snap = await getDocs(getAllModelsWithCurrMake);
+        if(snap.docs.length !== 0){
+            snap.docs.map(async(doc) => {
+                let currModel = db.collection("VehicleModel").doc(doc.id);
+                await currModel.update({
+                    Abrv: data.Abrv,
+                    MakeName: data.Name
+                })
+            })
+        }
     }
 }
 export default new MakeService();
