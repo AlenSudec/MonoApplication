@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import modelService from "../../../Common/Service/modelService";
 import ModelStore from "./ModelStore";
 
@@ -10,8 +10,21 @@ class EditStore {
     allMakes = [];
     selectValue = [];
     showConf = false;
+    id = "";
     constructor(){
         makeAutoObservable(this);
+        runInAction(async()=> {
+            await this.getIdFromUrl(window.location.href);
+            await this.getByIdAsync(this.id);
+            await this.getAllMakesAsync();
+        })
+    }
+    getIdFromUrl = async(url) => {
+        const splitUrl = url.split("/");
+        this.setId(splitUrl[4]);
+    }
+    setId(id){
+        this.id = id;
     }
     setShowConf(){
         this.showConf = !this.showConf;
@@ -43,6 +56,7 @@ class EditStore {
     }
     setAllMakes(data){
         this.allMakes = data;
+        console.log(this.allMakes);
     }
     getByIdAsync = async (id) => {
         const resultMake = await modelService.getByIdAsync(id);
@@ -143,4 +157,4 @@ class EditStore {
         this.currDataId = id;
     }
 }
-export default new EditStore();
+export default EditStore;

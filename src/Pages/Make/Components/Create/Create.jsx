@@ -1,11 +1,13 @@
-import { observer } from "mobx-react";
-import ListStore from "../../../Make/Stores/ListStore";
+import { inject } from "mobx-react";
+import React from "react";
 import "./Create.css";
 
-const Create = observer(() => {
-    const countries = ["Germany","France","Italy","England"];
-    return (
-        <>
+class Create extends React.Component{
+    render(){
+        const countries = ["Germany","France","Italy","England"];
+        const ListStore = this.props.listStore;
+        return(
+            <>
         <div 
             className="create-filler" 
             onClick={ListStore.handleClickOutside}
@@ -61,6 +63,8 @@ const Create = observer(() => {
             </form>
         </div>
         </>
-    )
-})
-export default Create;
+        )
+    }
+}
+
+export default inject("listStore")(Create);

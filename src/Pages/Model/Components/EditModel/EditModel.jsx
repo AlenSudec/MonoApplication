@@ -1,112 +1,114 @@
-import { useParams } from "react-router-dom";
-import { observer } from "mobx-react";
-import { useNavigate } from "react-router-dom";
+import { inject, observer, Provider } from "mobx-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import EditStore from "../../Stores/EditStore";
 import Confirmation from "../Confirmation";
+import { withRouter } from "../../../../Common/hooks/withRouter";
+import React from "react";
 
-const EditModel = observer(() => {
-    const navigate = useNavigate();
-    let { id } = useParams();
-    if(EditStore.getRunOnce() === false){
-        EditStore.getByIdAsync(id);
-        EditStore.getAllMakesAsync();
-        EditStore.setRunOnce();
-    }
-    return(
-        <div className="edit-container">
-            {EditStore.showConf ? (<Confirmation/>) : ("")}
-            
-        <div className="edit__header">
-            <div className="header__title">
-                <button 
-                    className="header__back" 
-                    onClick={()=>{ 
-                        EditStore.handleBack(); 
-                        navigate("/models")
-                    }}
-                >
-                    <FontAwesomeIcon 
-                        icon={faAngleDoubleLeft} 
-                        className="back__icon" 
-                    />
-                </button>
-                <h1>Edit</h1>
-            </div>
-            
-            <div className="header__id">
-                <div>Model ID: {EditStore.currData.docId}</div>
-                <button 
-                    className="delete-btn" 
-                    onClick={() => { EditStore.setShowConf() }}
-                >
-                    <FontAwesomeIcon 
-                        icon={faTrash} 
-                        className="delete-btn__trash" 
-                    />
-                </button>
-            </div>
-        </div>
-            <form 
-                className="edit__form" 
-                onSubmit={(e) => { 
-                    EditStore.handleUpdate(e); 
-                    navigate("/models");
-                }}
-            >
-                <div className="form__child">
-                    <label className="form__label">Name:</label>
-                    <input
-                        type="text"
-                        required
-                        key={EditStore.currData.Name}
-                        name="Name"
-                        className="form__input"
-                        defaultValue={EditStore.currData.Name}
-                    />
+
+class EditModel extends React.Component {
+    render(){
+        const editStore = this.props.editStore
+        return(
+            <div className="edit-container">
+                {editStore.showConf ? (
+                    <Provider editStore = {editStore}>
+                        <Confirmation/>
+                    </Provider>
+                ) : ("")}
+                <div className="edit__header">
+                    <div className="header__title">
+                        <button 
+                            className="header__back" 
+                            onClick={()=>{ 
+                                editStore.handleBack(); 
+                                this.props.navigate("/models")
+                            }}
+                        >
+                            <FontAwesomeIcon 
+                                icon={faAngleDoubleLeft} 
+                                className="back__icon" 
+                            />
+                        </button>
+                        <h1>Edit</h1>
+                    </div>
+                    
+                    <div className="header__id">
+                        <div>Model ID: {editStore.currData.docId}</div>
+                        <button 
+                            className="delete-btn" 
+                            onClick={() => { editStore.setShowConf() }}
+                        >
+                            <FontAwesomeIcon 
+                                icon={faTrash} 
+                                className="delete-btn__trash" 
+                            />
+                        </button>
+                    </div>
                 </div>
-                <div className="form__child">
-                    <label className="form__label">Year:</label>
-                    <input
-                        required
-                        key={EditStore.currData.Year}
-                        name="Year"
-                        type="number"
-                        className="form__input"
-                        defaultValue={EditStore.currData.Year}
-                    />
-                </div>
-                <div className="form__child">
-                    <label className="form__label form__label--select1">Make: </label>
-                    <select 
-                        value={EditStore.selectValue} 
-                        onChange={EditStore.handleOnChange} 
-                        name="MakeId"
+                    <form 
+                        className="edit__form" 
+                        onSubmit={(e) => { 
+                            editStore.handleUpdate(e); 
+                            this.props.navigate("/models");
+                        }}
                     >
-                        {EditStore.allMakes.map(make => 
-                            <option value={[
-                                make.docId,
-                                make.Abrv,
-                                make.Name
-                            ]}
-                                key={make.docId}
+                        <div className="form__child">
+                            <label className="form__label">Name:</label>
+                            <input
+                                type="text"
+                                required
+                                key={editStore.currData.Name}
+                                name="Name"
+                                className="form__input"
+                                defaultValue={editStore.currData.Name}
+                            />
+                        </div>
+                        <div className="form__child">
+                            <label className="form__label">Year:</label>
+                            <input
+                                required
+                                key={editStore.currData.Year}
+                                name="Year"
+                                type="number"
+                                className="form__input"
+                                defaultValue={editStore.currData.Year}
+                            />
+                        </div>
+                        <div className="form__child">
+                            <label className="form__label form__label--select1">Make: </label>
+                            <select 
+                                value={editStore.selectValue} 
+                                onChange={editStore.handleOnChange} 
+                                name="MakeId"
                             >
-                                {make.Name}
-                            </option>
-                        )}
-                    </select>
-                </div>
-                <button 
-                    className="form__btn" 
-                    type="submit"
-                >
-                    Save changes
-                </button>
-            </form>
-    </div>        
-    )
-})
+                                {editStore.allMakes.map(make => 
+                                    <option value={[
+                                        make.docId,
+                                        make.Abrv,
+                                        make.Name
+                                    ]}
+                                        key={make.docId}
+                                    >
+                                        {make.Name}
+                                    </option>
+                                )}
+                            </select>
+                        </div>
+                        <button 
+                            className="form__btn" 
+                            type="submit"
+                        >
+                            Save changes
+                        </button>
+                    </form>
+            </div>        
+        )
+    }
+}
 
-export default EditModel;
+export default inject((provider) => ({
+    editStore: new EditStore(provider),
+}))(withRouter(observer(EditModel)));

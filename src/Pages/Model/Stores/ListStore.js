@@ -1,4 +1,4 @@
-import { makeAutoObservable} from "mobx";
+import { makeAutoObservable, runInAction} from "mobx";
 import modelService from "../../../Common/Service/modelService";
 import ModelStore from "./ModelStore";
 
@@ -13,7 +13,10 @@ class ListStore {
     backButtonState = true;
     constructor(){
         makeAutoObservable(this);
-        this.getMakeAsync();
+        runInAction(async () => {
+            await this.getMakeAsync();
+        })
+        
     }
     setNextButtonState(state){
         this.nextButtonState = state;
@@ -33,7 +36,7 @@ class ListStore {
     getModelStoreData(){
         return ModelStore.data;
     }
-    createAsync = async (data) => {
+    static createAsync = async (data) => { // find a way not to use static
         await modelService.createAsync(data);
         ModelStore.setShowCreate();
         ModelStore.setShowNotification();
@@ -50,8 +53,9 @@ class ListStore {
         this.getMakeAsync(false,false);
     }
 
-    handleSubmit = (e,props) => {
+    static handleSubmit = (e,props) => { // find a way not to use static
         e.preventDefault();
+        console.log("handll");
         let data;
         data = {
             docId: "",
@@ -150,4 +154,4 @@ class ListStore {
         }
     }
 }
-export default new ListStore();
+export default ListStore;

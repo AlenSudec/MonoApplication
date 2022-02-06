@@ -98,5 +98,9 @@ class ModelStore {
     reRunGetMake(){
         ListStore.getMakeAsync();
     }
+    handleSubmitCreate = (e,data) => {
+        console.log("hm4")
+        ListStore.handleSubmit(e,data);
+    }
 }
 export default new ModelStore();

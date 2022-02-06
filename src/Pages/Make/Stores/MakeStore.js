@@ -42,6 +42,10 @@ class MakeStore {
     setShowNotification = () => {
         EditStore.setShowNotification();
     }
+    handleSubmitCreate = (e,data) => {
+        console.log("hm2")
+        MainStore.handleSubmitCreate(e,data);
+    }
 }
 
 export default new MakeStore();

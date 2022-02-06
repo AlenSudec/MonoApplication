@@ -1,30 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import ListStore from "../../Stores/ListStore";
+import React from "react";
+import { inject } from "mobx-react";
 
-const Item = (props) => {
-    return (
-        
-        <Link
-            to={"/models/" + props.item.docId}
-            className="edit-make"
-            onClick={ListStore.hideCreate}
-            key={props.item.docId}
-        >
-            
-            <div className="list__make">
-                <div className="make__info">
-                    <div className="list__child list__child--first">{props.item.Name}</div>
-                    <div className="list__child">{props.item.Abrv}</div>
-                    <div className="list__child">{props.item.MakeName}</div>
-                    <div className="list__child">{props.item.Year}</div>
+class Item extends React.Component{
+    render(){
+        const ListStore = this.props.listStore;
+        const item = this.props.item;
+        return(
+            <Link
+                to={"/models/" + item.docId}
+                className="edit-make"
+                onClick={ListStore.hideCreate}
+                key={item.docId}
+            >
+                <div className="list__make">
+                    <div className="make__info">
+                        <div className="list__child list__child--first">{item.Name}</div>
+                        <div className="list__child">{item.Abrv}</div>
+                        <div className="list__child">{item.MakeName}</div>
+                        <div className="list__child">{item.Year}</div>
+                    </div>
+                    <div className="list__child list__child--last">
+                        <FontAwesomeIcon icon={faAngleDoubleRight}/>
+                    </div>
                 </div>
-                <div className="list__child list__child--last">
-                    <FontAwesomeIcon icon={faAngleDoubleRight}/>
-                </div>
-            </div>
-        </Link>
-    )
+            </Link>
+        )
+    }
 }
-export default Item;
+
+export default inject("listStore")(Item);

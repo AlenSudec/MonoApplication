@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import makeService from "../../../Common/Service/makeService";
 import MakeStore from "./MakeStore";
 
@@ -16,7 +16,10 @@ class ListStore {
     showNotification = false;
     constructor(){
         makeAutoObservable(this);
-        this.getMakeAsync();
+        runInAction(async () => {
+            await this.getMakeAsync();
+            console.log("list store started123");
+        })
     }
     setShowNotification(){
         this.showNotification = !this.showNotification;
@@ -173,4 +176,5 @@ class ListStore {
         this.revenueFilter = revenueFilter;
     }
 }
-export default new ListStore();
+export default ListStore;
+//export default new ListStore();

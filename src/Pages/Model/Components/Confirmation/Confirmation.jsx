@@ -1,9 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import EditStore from "../../Stores/EditStore";
-const Confirmation = () => {
-    const navigate = useNavigate();
-    return(
-        <>
+import React from "react";
+import { inject } from "mobx-react";
+import { withRouter } from "../../../../Common/hooks/withRouter";
+
+class Confirmation extends React.Component{
+    render(){
+        const EditStore = this.props.editStore;
+        return(
+            <>
             <div 
                 className="confirmation__bg" 
                 onClick={()=>{EditStore.setShowConf()}}
@@ -28,7 +31,7 @@ const Confirmation = () => {
                     onClick={() => { 
                         EditStore.setShowConf(); 
                         EditStore.deleteMake(); 
-                        navigate("/models") 
+                        this.props.navigate("/models") 
                     }}
                 >
                     Delete
@@ -36,6 +39,8 @@ const Confirmation = () => {
             </div>
         </div>
         </>
-    )
+        )
+    }
 }
-export default Confirmation;
+
+export default withRouter(inject("editStore")(Confirmation));

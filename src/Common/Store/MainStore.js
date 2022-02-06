@@ -5,6 +5,7 @@ import ModelStore from "../../Pages/Model/Stores/ModelStore";
 class MainStore {
     constructor(){
         makeAutoObservable(this);
+        console.log("main start");
     }
 
     //communication between make store and model store, 
@@ -27,6 +28,10 @@ class MainStore {
     }
     getAllModels = () => {
         ModelStore.reRunGetMake();
+    }
+    handleSubmitCreate = (e,data) => {
+        console.log("hm3");
+        ModelStore.handleSubmitCreate(e,data);
     }
 }
 export default new MainStore();

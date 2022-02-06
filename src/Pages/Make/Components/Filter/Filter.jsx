@@ -1,17 +1,22 @@
-import ListStore from "../../Stores/ListStore";
-import {Observer} from "mobx-react";
+
+import {Observer, inject} from "mobx-react";
+import React from "react";
 import "./Filter.css";
-const Filter = () => {
-    const countries = ["None","Germany","France","Italy","England"]; //etc
-    const revenues = [
-        {text: "None", data : "None"},
-        {text: "More than 5 bil", data : "5"}, 
-        {text: "More than 10 bil", data : "10"}, 
-        {text: "More than 15 bil", data: "15"},
-        {text: "More than 20 bil", data: "20"} //etc
-    ];
-    return(
-        <div className="header__filter filter__container">
+
+class Filter extends React.Component{
+    render(){
+        console.log(this);
+        const ListStore = this.props.listStore;
+        const countries = ["None","Germany","France","Italy","England"]; //etc
+        const revenues = [
+            {text: "None", data : "None"},
+            {text: "More than 5 bil", data : "5"}, 
+            {text: "More than 10 bil", data : "10"}, 
+            {text: "More than 15 bil", data: "15"},
+            {text: "More than 20 bil", data: "20"} //etc
+        ];
+        return(
+            <div className="header__filter filter__container">
             <h3 className="filter__h3">Filter by:</h3>
             <div className="filters">
                 <div className="filter">
@@ -69,6 +74,8 @@ const Filter = () => {
             </div>
             
         </div> 
-    )
+        )
+
+    }
 }
-export default Filter;
+export default inject("listStore")(Filter);

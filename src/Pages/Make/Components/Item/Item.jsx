@@ -1,22 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
-import ListStore from "../../Stores/ListStore";
 import { Link } from "react-router-dom";
-
-const Item = (props) => {
-    return (
-        <Link
-            to={"/editMake/" + props.item.docId}
+import React from "react";
+import { inject } from "mobx-react";
+class Item extends React.Component{
+    render(){
+        const ListStore = this.props.listStore;
+        const item = this.props.item;
+        return (
+            <Link
+            to={"/editMake/" + item.docId}
             className="edit-make"
             onClick={ListStore.hideCreate}
-            key={props.item.docId}
+            key={item.docId}
         >
             <div className="list__make">
                 <div className="make__info">
-                    <div className="list__child list__child--firstMake">{props.item.Name}</div>
-                    <div className="list__child">{props.item.Abrv}</div>
-                    <div className="list__child">{props.item.Country}</div>
-                    <div className="list__child">{props.item.Revenue}</div>
+                    <div className="list__child list__child--firstMake">{item.Name}</div>
+                    <div className="list__child">{item.Abrv}</div>
+                    <div className="list__child">{item.Country}</div>
+                    <div className="list__child">{item.Revenue}</div>
                 </div>
                 
                 <div className="list__child list__child--last">
@@ -24,6 +27,8 @@ const Item = (props) => {
                 </div>
             </div>
         </Link>
-    )
+        )
+    }
 }
-export default Item;
+
+export default inject("listStore")(Item);
