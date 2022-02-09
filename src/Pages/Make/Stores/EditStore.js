@@ -113,7 +113,7 @@ class EditStore {
         }
         MakeStore.setData(this.contents);
         this.contents = [];
-        MakeStore.removeFromAllMakes(id);
+        MakeStore.removeFromAllMakes(id);//fix
     }
    
     setCurrData(currentData){
@@ -168,10 +168,26 @@ class EditStore {
     handleClickOutside = () => {
         this.setShowCreate();
     }
-    handleSubmitCreate = (e,data) => {
+    handleSubmitCreate = (e,props) => {
         e.preventDefault();
         console.log("hm");
-        MakeStore.handleSubmitCreate(e,data);
+        // MakeStore.handleSubmitCreate(e,data);
+        let data;
+        data = {
+            docId: "",
+            Name: e.target.modelName.value,
+            Abrv: props.Abrv,
+            MakeId: props.id,
+            MakeName: props.Name,
+            modelYear : e.target.modelYear.value
+        }
+        this.createModelAsync(data);
+    }
+    createModelAsync = async (data) => {
+        await makeService.createModelAsync(data);
+        //this.setShowCreate();
+        this.setShowNotification();
+        //rerender getAsync
     }
 }
 export default EditStore;

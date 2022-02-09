@@ -36,7 +36,7 @@ class ListStore {
     getModelStoreData(){
         return ModelStore.data;
     }
-    static createAsync = async (data) => { // find a way not to use static
+    createAsync = async (data) => { // not using
         await modelService.createAsync(data);
         ModelStore.setShowCreate();
         ModelStore.setShowNotification();
@@ -53,7 +53,7 @@ class ListStore {
         this.getMakeAsync(false,false);
     }
 
-    static handleSubmit = (e,props) => { // find a way not to use static
+    handleSubmit = (e,props) => { // not using
         e.preventDefault();
         console.log("handll");
         let data;

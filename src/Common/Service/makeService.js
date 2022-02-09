@@ -176,5 +176,16 @@ class MakeService {
             })
         }
     }
+    createModelAsync = async (data) => {
+        const create = await db.collection("VehicleModel").add({
+            MakeId : data.MakeId,
+            Name : data.Name,
+            Abrv : data.Abrv,
+            MakeName : data.MakeName,
+            Year : parseInt(data.modelYear)
+        })
+        data.docId = create.id;
+        return await data;
+    }
 }
 export default new MakeService();
