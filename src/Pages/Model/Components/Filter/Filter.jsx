@@ -30,8 +30,8 @@ class Filter extends React.Component{
                                     value={ListStore.yearFilter} 
                                     onChange={ListStore.handleChangeYear}
                                 >
-                                    {years.map(year =>
-                                        <option key={year} value={year}>
+                                    {years.map((year,i) =>
+                                        <option key={year+i} value={year}>
                                             {year}
                                         </option>
                                     )}

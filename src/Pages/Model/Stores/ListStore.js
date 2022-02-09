@@ -15,6 +15,7 @@ class ListStore {
         makeAutoObservable(this);
         runInAction(async () => {
             await this.getMakeAsync();
+            ModelStore.getListStore(this);
         })
         
     }
@@ -55,7 +56,6 @@ class ListStore {
 
     handleSubmit = (e,props) => { // not using
         e.preventDefault();
-        console.log("handll");
         let data;
         data = {
             docId: "",

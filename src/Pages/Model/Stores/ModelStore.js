@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import modelService from "../../../Common/Service/modelService";
 import MainStore from "../../../Common/Store/MainStore";
-import ListStore from "./ListStore";
+
 class ModelStore {
     data = [];
     results = [];
@@ -96,11 +96,16 @@ class ModelStore {
         this.showCreate = !this.showCreate;
     }
     reRunGetMake(){
-        ListStore.getMakeAsync();
+        this.listStore.getMakeAsync();
     }
-    handleSubmitCreate = (e,data) => {
-        console.log("hm4")
-        ListStore.handleSubmit(e,data);
+    getListStore(listStore){
+        this.setListStore(listStore);
     }
+    setListStore(listStore){
+        this.listStore = listStore;
+    }
+    // handleSubmitCreate = (e,data) => {
+    //     ListStore.handleSubmit(e,data);
+    // }
 }
 export default new ModelStore();

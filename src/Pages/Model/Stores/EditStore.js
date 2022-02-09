@@ -56,7 +56,6 @@ class EditStore {
     }
     setAllMakes(data){
         this.allMakes = data;
-        console.log(this.allMakes);
     }
     getByIdAsync = async (id) => {
         const resultMake = await modelService.getByIdAsync(id);

@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import MainStore from "../../../Common/Store/MainStore";
-import EditStore from "../Stores/EditStore";
 
 
 class MakeStore {
@@ -39,13 +38,15 @@ class MakeStore {
     updateAllMakes = (data) => {
         MainStore.updateAllMakes(data);
     }
-    setShowNotification = () => {
-        EditStore.setShowNotification();
+    getListStore(listStore){
+        this.setListStore(listStore);
     }
-    handleSubmitCreate = (e,data) => {
-        console.log("hm2")
-        MainStore.handleSubmitCreate(e,data);
+    setListStore(listStore){
+        this.listStore = listStore;
     }
+    // setShowNotification = () => {
+    //     EditStore.setShowNotification();
+    // }
 }
 
 export default new MakeStore();

@@ -17,15 +17,18 @@ class ListStore {
     constructor(){
         makeAutoObservable(this);
         runInAction(async () => {
+            MakeStore.getListStore(this);
             await this.getMakeAsync();
-            console.log("list store started123");
         })
     }
     setShowNotification(){
-        this.showNotification = !this.showNotification;
+        this.setNotification();
         setTimeout(() => {
-            this.showNotification = !this.showNotification
+            this.setNotification();
         }, 1000);
+    }
+    setNotification(){
+        this.showNotification = !this.showNotification;
     }
     setNextButtonState(state) {
         this.nextButtonState = state;

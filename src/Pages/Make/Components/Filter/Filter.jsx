@@ -5,7 +5,6 @@ import "./Filter.css";
 
 class Filter extends React.Component{
     render(){
-        console.log(this);
         const ListStore = this.props.listStore;
         const countries = ["None","Germany","France","Italy","England"]; //etc
         const revenues = [

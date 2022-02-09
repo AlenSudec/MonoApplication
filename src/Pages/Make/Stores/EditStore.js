@@ -19,7 +19,6 @@ class EditStore {
             await this.getIdFromUrl(window.location.href);
             await this.getMakeByIdAsync(this.id);
             await this.checkModels(this.id);
-            console.log("editstore started");
         })
         
     }
@@ -31,10 +30,13 @@ class EditStore {
         this.id = id;
     }
     setShowNotification(){
-        this.showNotification = !this.showNotification;
+        this.setNotification();
         setTimeout(()=> {
-            this.showNotification = !this.showNotification;
+            this.setNotification();
         }, 2000);
+    }
+    setNotification(){
+        this.showNotification = !this.showNotification;
     }
     setShowCreate(){
         this.showCreate = !this.showCreate;
@@ -113,6 +115,7 @@ class EditStore {
         }
         MakeStore.setData(this.contents);
         this.contents = [];
+
         MakeStore.removeFromAllMakes(id);//fix
     }
    
@@ -170,8 +173,6 @@ class EditStore {
     }
     handleSubmitCreate = (e,props) => {
         e.preventDefault();
-        console.log("hm");
-        // MakeStore.handleSubmitCreate(e,data);
         let data;
         data = {
             docId: "",
@@ -185,9 +186,8 @@ class EditStore {
     }
     createModelAsync = async (data) => {
         await makeService.createModelAsync(data);
-        //this.setShowCreate();
         this.setShowNotification();
-        //rerender getAsync
+
     }
 }
 export default EditStore;

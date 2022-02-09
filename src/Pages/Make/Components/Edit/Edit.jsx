@@ -2,7 +2,6 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 import EditStore from "../../Stores/EditStore";
 import { withRouter } from "../../../../Common/hooks/withRouter";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faTrash, faAngleDoubleLeft  } from "@fortawesome/free-solid-svg-icons";
 import "./Edit.css";
