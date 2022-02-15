@@ -101,19 +101,21 @@ class EditStore {
                 this.contents[i].Revenue = parseInt(data.Revenue);
             }
         }
-        MakeStore.setData(this.contents);
+        //MakeStore.setData(this.contents);
         this.contents = [];
         MakeStore.updateAllMakes(data);
         MakeStore.getAllModels();
     }
     deleteMakeAsync = async (id) => {
         await makeService.deleteMakeASync(id);
+        
         for(let i = 0; i < this.contents.length; i++){
             if(this.contents[i].docId === id){
                 this.contents.splice(i, 1);
             }
         }
-        MakeStore.setData(this.contents);
+        //MakeStore.setData(this.contents);
+
         this.contents = [];
 
         MakeStore.removeFromAllMakes(id);//fix

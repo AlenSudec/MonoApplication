@@ -1,4 +1,3 @@
-import { observer, inject, Provider } from "mobx-react";
 import EmptyListMsg from "../EmptyListMsg";
 import React from "react";
 import "./List.css";
@@ -6,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ListHeader from "../ListHeader";
 import Notification from "../Notification";
+import { Observer, observer } from "mobx-react";
 
 class List extends React.Component{
     render(){
@@ -17,58 +17,61 @@ class List extends React.Component{
         const headers = this.props.headers;
         return(
             <>
-                {store.showNotification ? (<Notification msg={notification}/>) : ("")}
-                {data.length !== 0 ? (
-                    <div className="list">
-                        <Provider listStore={store}>
-                            <ListHeader 
-                                headers={headers} 
-                            />
-                        </Provider>
-                        
-                        <div className="list list--fixed-size">
-                            <Provider 
-                                listStore={store}
-                            >
-                                {data.map(item =>
-                                    <ItemComponent 
-                                        item = {item}
-                                        key = {item.docId} 
-                                    />  
-                                )}
-                            </Provider>
-                        </div>
-                        <div className="list__pagination">
-                            <button 
-                                disabled={store.backButtonState} 
-                                className={"list__back " + store.backButtonState} 
-                                onClick={() => store.getMakeAsync(false, true)}
-                            >
-                                <FontAwesomeIcon
-                                    icon={faArrowLeft}
-                                    className="back__icon1"
+                <Observer>
+                    {() => 
+                        store.showNotification ? (<Notification msg={notification}/>) : ("")
+                    }
+                </Observer>
+                <Observer>
+                    {() => 
+                        data.length !== 0 ? (
+                            <div className="list">
+                                <ListHeader
+                                    listStore = {store} 
+                                    headers={headers} 
                                 />
-                                Back
-                            </button>
-                            <button 
-                                disabled={store.nextButtonState} 
-                                className={"list__forward " + store.nextButtonState} 
-                                onClick={()=> store.getMakeAsync(true,false)}
-                            >
-                                Forward
-                                <FontAwesomeIcon
-                                    icon={faArrowRight}
-                                    className="forward__icon"
-                                />
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <EmptyListMsg msg={msg}/>
-                )}
+                                <div className="list list--fixed-size">
+                                    {data.map(item =>
+                                        <ItemComponent
+                                            listStore={store}
+                                            item = {item}
+                                            key = {item.docId} 
+                                        />
+                                    )}
+                                </div>
+                                <div className="list__pagination">
+                                    <button 
+                                        disabled={store.backButtonState} 
+                                        className={"list__back " + store.backButtonState} 
+                                        onClick={() => store.getMakeAsync(false, true)}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faArrowLeft}
+                                            className="back__icon1"
+                                        />
+                                        Back
+                                    </button>
+                                    <button 
+                                        disabled={store.nextButtonState} 
+                                        className={"list__forward " + store.nextButtonState} 
+                                        onClick={()=> store.getMakeAsync(true,false)}
+                                    >
+                                        Forward
+                                        <FontAwesomeIcon
+                                            icon={faArrowRight}
+                                            className="forward__icon"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <EmptyListMsg msg={msg}/>
+                        )
+                    }
+                </Observer>
             </>
         )
     }
 }
     
-export default inject("listStore")(observer(List));
+export default List;

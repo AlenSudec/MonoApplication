@@ -97,6 +97,7 @@ class ModelService {
                 startAfter(lastVisible),
                 limit(5)
             );
+            
             const dataSnap = await getDocs(getData);
             return dataSnap;
         }

@@ -21,15 +21,17 @@ class ListStore {
             await this.getMakeAsync();
         })
     }
+    setNotification(){
+        this.showNotification = !this.showNotification;
+    }
     setShowNotification(){
         this.setNotification();
         setTimeout(() => {
             this.setNotification();
         }, 1000);
+        
     }
-    setNotification(){
-        this.showNotification = !this.showNotification;
-    }
+   
     setNextButtonState(state) {
         this.nextButtonState = state;
     }
@@ -96,6 +98,7 @@ class ListStore {
         }
         else {
             //INIT QUERY OR FIRST PAGE
+
             const resultMake = await makeService.getMakeAsync(this.sortFilter, this.ascOrDesc, this.revenueFilter, this.countryFilter);
             this.lastVisible = resultMake.docs[resultMake.docs.length-1];
             this.results = [];
@@ -149,6 +152,7 @@ class ListStore {
         }
         MakeStore.setShowCreate();
         this.createMakeAsync(data);
+        //this.setShowNotification();
     }
     handleClickOutside = () => {
         MakeStore.setShowCreate();

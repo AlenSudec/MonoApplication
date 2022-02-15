@@ -1,4 +1,4 @@
-import { inject, observer, Provider } from "mobx-react";
+import { inject, observer} from "mobx-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -14,9 +14,9 @@ class EditModel extends React.Component {
         return(
             <div className="edit-container">
                 {editStore.showConf ? (
-                    <Provider editStore = {editStore}>
-                        <Confirmation/>
-                    </Provider>
+                    <Confirmation
+                        editStore = {editStore}
+                    />
                 ) : ("")}
                 <div className="edit__header">
                     <div className="header__title">

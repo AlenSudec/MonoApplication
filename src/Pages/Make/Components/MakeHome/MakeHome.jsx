@@ -3,7 +3,7 @@ import Create from "../Create";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle} from "@fortawesome/free-solid-svg-icons";
-import { inject, observer, Provider } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import List from "../../../../Components/List";
 import Filter from "../Filter/Filter";
 import Item from "../Item";
@@ -28,25 +28,23 @@ class MakeHome extends React.Component{
                         Add make         
                     </button>
                     {listStore.getMakeStoreShowCreate() ? (
-                        <Provider listStore = {listStore}>
-                            <Create/>
-                        </Provider>
+                        <Create 
+                            listStore = {listStore}
+                        />
                     ) : ("")}
                 </div>
             </div>
-            <Provider listStore={listStore}>
-                <Filter/>
-            </Provider>
-            <Provider listStore={listStore}>
+                <Filter
+                    listStore = {listStore}
+                />
                 <List 
                     data={listStore.getMakeStoreData()}
                     msg="No car makes found, add them by using top-right button 'Add make'"
                     headers={["Name","Abrv","Country","Revenue"]}
                     itemComponent = {Item}
+                    listStore = {listStore}
                     notificationMsg="New vehicle make has been added"
                 />
-            </Provider>
-            
         </div>
         );
     }

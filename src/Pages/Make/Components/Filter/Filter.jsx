@@ -1,5 +1,5 @@
 
-import {Observer, inject} from "mobx-react";
+import {Observer} from "mobx-react";
 import React from "react";
 import "./Filter.css";
 
@@ -77,4 +77,4 @@ class Filter extends React.Component{
 
     }
 }
-export default inject("listStore")(Filter);
+export default Filter;

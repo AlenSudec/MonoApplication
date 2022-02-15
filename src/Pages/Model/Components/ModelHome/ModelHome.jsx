@@ -1,4 +1,4 @@
-import {inject, observer, Provider} from "mobx-react";
+import {inject, observer} from "mobx-react";
 import ListStore from "../../Stores/ListStore";
 import List from "../../../../Components/List";
 import Item from "../Item";
@@ -13,18 +13,16 @@ class ModelHome extends React.Component{
                 <div className="header">
                     <h1 className="header__title">Model list</h1>
                 </div>
-                <Provider listStore = {listStore}>
-                    <Filter/>
-                </Provider>
-                
-                <Provider listStore={listStore}>
+                    <Filter
+                        listStore = {listStore}
+                    />
                     <List
                         data={listStore.getModelStoreData()}
                         msg="No car models found, add them inside 'Make list'"
                         headers={["Name", "Abrv","MakeName", "Year"]}
+                        listStore = {listStore}
                         itemComponent = {Item}
                     />
-                </Provider>
             </div>
         )
     }

@@ -8,7 +8,6 @@ import "./Edit.css";
 import CreateModel from "../../../Model/Components/CreateModel";
 import Confirmation from "../Confirmation/Confirmation";
 import Notification from "../../../../Components/Notification";
-import { Provider } from "mobx-react";
 
 class Edit extends React.Component{
     render(){
@@ -17,9 +16,9 @@ class Edit extends React.Component{
         return(
             <div className="edit-container">
                 {editStore.showConf ? (
-                    <Provider editStore={editStore}>
-                        <Confirmation/>
-                    </Provider>
+                    <Confirmation 
+                        editStore = {editStore}
+                    />
                 ) : ("")}
                 {editStore.showNotification ? (<Notification msg="New vehicle model has been added"/>) : ("")}
                 <div className="edit__header">
@@ -51,20 +50,17 @@ class Edit extends React.Component{
 
                         </button>
                         {editStore.showCreate ? (
-                            <Provider editStore={editStore}>
                                 <CreateModel 
                                     data = {{
                                         id : editStore.currData.docId, 
                                         Abrv : editStore.currData.Abrv, 
                                         Name : editStore.currData.Name
                                     }}
+                                    editStore = {editStore}
                                 />
-                            </Provider>
                             
                         ) : ("")}
-                        
                     </div>
-                    
                     <div className="header__id">
                         <div>Make Id: {editStore.currData.docId}</div>
                         <button 
