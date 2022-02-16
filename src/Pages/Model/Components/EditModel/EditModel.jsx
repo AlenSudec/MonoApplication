@@ -16,6 +16,7 @@ class EditModel extends React.Component {
                 {editStore.showConf ? (
                     <Confirmation
                         editStore = {editStore}
+                        confStore = {editStore.confStore}
                     />
                 ) : ("")}
                 <div className="edit__header">

@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction} from "mobx";
 import modelService from "../../../Common/Service/modelService";
+import FilterModelStore from "./ComponentStores/FilterModelStore";
 import ModelStore from "./ModelStore";
+import ListHeaderStore from "../../../Common/Store/ListHeaderStore";
 
 class ListStore {
     lastVisible = null;
@@ -13,6 +15,8 @@ class ListStore {
     backButtonState = true;
     constructor(){
         makeAutoObservable(this);
+        this.filterModelStore = new FilterModelStore(this.getMakeAsync,this.getAllMakes);
+        this.listHeaderStore = new ListHeaderStore(this.setSortFilter);
         runInAction(async () => {
             await this.getMakeAsync();
             ModelStore.getListStore(this);
@@ -25,12 +29,12 @@ class ListStore {
     setBackButtonState(state){
         this.backButtonState = state;
     }
-    setYearFilter(year){
-        this.yearFilter = year;
-    }
-    setMakeFilter(make){
-        this.makeFilter = make;
-    }
+    // setYearFilter(year){
+    //     this.yearFilter = year;
+    // }
+    // setMakeFilter(make){
+    //     this.makeFilter = make;
+    // }
     getAllMakes(){
         return ModelStore.allMakes;
     }
@@ -43,13 +47,13 @@ class ListStore {
         ModelStore.setShowNotification();
         this.getMakeAsync();
     }
-    handleChangeYear = (e) => {
-        this.setYearFilter(e.target.value);
-    }
-    handleChangeMake = (e) => {
-        this.setMakeFilter(e.target.value);
-    }
-    setSortFilter(filter){
+    // handleChangeYear = (e) => {
+    //     this.setYearFilter(e.target.value);
+    // }
+    // handleChangeMake = (e) => {
+    //     this.setMakeFilter(e.target.value);
+    // }
+    setSortFilter = (filter) => {
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
     }
@@ -73,9 +77,9 @@ class ListStore {
     handleClickOutside = () => {
         ModelStore.setShowCreate();
     }
-    getMakeAsync = async(frwrd, bcwrd) => {
+    getMakeAsync = async(frwrd, bcwrd, yearFilter = "None", makeFilter = "None") => {
         if(frwrd){
-            const resultMake = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+            const resultMake = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, yearFilter, makeFilter);
             this.setBackButtonState(false);
             if(resultMake.docs.length > 0){
                 this.lastVisible = resultMake.docs[resultMake.docs.length-1];
@@ -94,14 +98,14 @@ class ListStore {
                 })
                 ModelStore.setData(this.results);
                 //check data for next page
-                const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+                const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, yearFilter, makeFilter);
                 if(resultMakeNext.docs.length === 0){
                     this.setNextButtonState(true);
                 }
             }
         }
         else if(bcwrd){
-            const resultMake = await modelService.getBackPageAsync(this.firstVisible, this.sortFilter,this.yearFilter,this.makeFilter);
+            const resultMake = await modelService.getBackPageAsync(this.firstVisible, this.sortFilter, yearFilter, makeFilter);
             if(resultMake.docs.length === 5){
                 this.lastVisible = resultMake.docs[resultMake.docs.length-1];
                 this.firstVisible = resultMake.docs[resultMake.docs.length - (resultMake.docs.length-1)-1];
@@ -120,14 +124,14 @@ class ListStore {
                 this.setNextButtonState(false);
                 ModelStore.setData(this.results);
                 //check data on backpage
-                const resultMakeBack = await modelService.getBackPageAsync(this.firstVisible, this.sortFilter,this.yearFilter,this.makeFilter);
+                const resultMakeBack = await modelService.getBackPageAsync(this.firstVisible, this.sortFilter, yearFilter, makeFilter);
                 if(resultMakeBack.docs.length === 0){
                     this.setBackButtonState(true);
                 }
             }
         }
         else {
-            const resultMake = await modelService.getAsync(this.sortFilter, this.ascOrDesc,this.yearFilter, this.makeFilter);
+            const resultMake = await modelService.getAsync(this.sortFilter, this.ascOrDesc, yearFilter, makeFilter);
             this.lastVisible = resultMake.docs[resultMake.docs.length-1];
             this.results = [];
             resultMake.forEach(doc=> {
@@ -144,7 +148,7 @@ class ListStore {
             ModelStore.setData(this.results);
             this.setNextButtonState(false);
             //check data for next page
-            const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, this.yearFilter, this.makeFilter);
+            const resultMakeNext = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, yearFilter, makeFilter);
             if(resultMakeNext.docs.length === 0){
                 this.setNextButtonState(true);
             }

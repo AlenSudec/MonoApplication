@@ -5,7 +5,7 @@ import "./Filter.css";
 
 class Filter extends React.Component{
     render(){
-        const ListStore = this.props.listStore;
+        const filterStore = this.props.filterStore;
         const countries = ["None","Germany","France","Italy","England"]; //etc
         const revenues = [
             {text: "None", data : "None"},
@@ -22,8 +22,8 @@ class Filter extends React.Component{
                     <label className="filter__label label--mg">Country:</label>
                     <Observer>{()=>
                         <select 
-                            value={ListStore.countryFilter} 
-                            onChange={ListStore.handleChangeCountry}
+                            value={filterStore.countryFilter} 
+                            onChange={filterStore.handleChangeCountry}
                         >
                             {countries.map(country => 
                                 <option key={country} value={country}>
@@ -31,7 +31,7 @@ class Filter extends React.Component{
                                 </option>
                             )}
                         </select>
-                        }
+                    }
                     </Observer>
                     
                 </div>
@@ -39,8 +39,8 @@ class Filter extends React.Component{
                     <label className="filter__label">Revenue:</label>
                     <Observer>{()=>
                         <select 
-                            value={ListStore.revenueFilter} 
-                            onChange={ListStore.handleChangeRevenue}
+                            value={filterStore.revenueFilter} 
+                            onChange={filterStore.handleChangeRevenue}
                         >
                             {revenues.map(revenue => 
                                 <option key={revenue.data} value={revenue.data}>
@@ -50,22 +50,23 @@ class Filter extends React.Component{
                         </select>
                         }
                     </Observer>
-                   
                 </div>
             </div>
             <div className="filter__buttons">
                 <button 
                     className="filter__btn" 
-                    onClick={() => ListStore.getMakeAsync(false,false)}
+                    onClick={() => 
+                        filterStore.runGetMakeAsync(false, false, filterStore.revenueFilter, filterStore.countryFilter)
+                    }
                 >
                     Filter
                 </button>
                 <button 
                     className="filter__btn" 
                     onClick={() => {
-                        ListStore.setCountryFilter("None"); 
-                        ListStore.setRevenueFilter("None"); 
-                        ListStore.getMakeAsync(false,false); 
+                        filterStore.setCountryFilter("None"); 
+                        filterStore.setRevenueFilter("None"); 
+                        filterStore.runGetMakeAsync(false, false); 
                     }}
                 >
                     Reset

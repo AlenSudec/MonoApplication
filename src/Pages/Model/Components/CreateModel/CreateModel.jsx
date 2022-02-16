@@ -1,4 +1,3 @@
-import { inject } from "mobx-react";
 import React from "react";
 
 class CreateModel extends React.Component{
@@ -30,7 +29,7 @@ class CreateModel extends React.Component{
                     <form 
                         className="create-form" 
                         onSubmit={(e) => { 
-                            store.handleSubmitCreate(e,data); //better fix
+                            store.handleSubmitCreate(e,data); 
                             store.handleClickOutside() 
                         }}
                     >
@@ -73,4 +72,4 @@ class CreateModel extends React.Component{
     }
 }
     
-export default inject("editStore")(CreateModel);
+export default CreateModel;

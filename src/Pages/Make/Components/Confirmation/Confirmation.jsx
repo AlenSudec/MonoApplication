@@ -1,21 +1,22 @@
 import "./Confirmation.css";
 import React from "react";
 import { withRouter } from "../../../../Common/hooks/withRouter";
-import { inject } from "mobx-react";
+
 
 class Confirmation extends React.Component {
     
     render(){
-        const EditStore = this.props.editStore;
+        
+        const confStore = this.props.confStore;
         return(
             <>
-                <div className="confirmation__bg" onClick={()=>{ EditStore.setShowConf()} }>
+                <div className="confirmation__bg" onClick={()=>{ confStore.hideConf()} }>
                 </div>
                 <div className="confirmation__box">
                     <h3 className="conf__title">Delete Confirmation</h3>
                     <hr className="conf__line"/>
                     <div className="box__text">
-                        {EditStore.hasModels ? (
+                        {confStore.onHasModels ? (
                             <div className="instructions">
                                 <p className="warning">This Vehicle Make currently has Vehicle Models that are connected to it.</p>
                                 <p>To be able to delete this Vehicle Make, all Vehicle Models that are connected with this Make have to be deleted.</p>
@@ -32,15 +33,15 @@ class Confirmation extends React.Component {
                     <div className="box__btns">
                         <button 
                             className="btn btn--back" 
-                            onClick={() => {EditStore.setShowConf()}}
+                            onClick={() => {confStore.hideConf()}}
                         >
                             Back
                         </button>
-                        {EditStore.hasModels ? ( "" ) :
+                        {confStore.onHasModels ? ( "" ) :
                         (
                             <button 
                                 className="btn btn--del" 
-                                onClick={() => { EditStore.setShowConf(); EditStore.deleteMake();  this.props.navigate("/")}} //navigate("/")
+                                onClick={() => { confStore.hideConf(); confStore.deleteMake();  this.props.navigate("/")}}
                             >
                                 Delete
                             </button>
@@ -52,4 +53,4 @@ class Confirmation extends React.Component {
         )
     }
 }
-export default withRouter(inject("editStore")(Confirmation));
+export default withRouter(Confirmation);

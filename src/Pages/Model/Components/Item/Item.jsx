@@ -2,17 +2,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import React from "react";
-import { inject } from "mobx-react";
 
 class Item extends React.Component{
     render(){
-        const ListStore = this.props.listStore;
         const item = this.props.item;
         return(
             <Link
                 to={"/models/" + item.docId}
                 className="edit-make"
-                onClick={ListStore.hideCreate}
                 key={item.docId}
             >
                 <div className="list__make">
@@ -31,4 +28,4 @@ class Item extends React.Component{
     }
 }
 
-export default inject("listStore")(Item);
+export default Item;

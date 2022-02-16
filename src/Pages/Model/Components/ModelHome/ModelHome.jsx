@@ -14,7 +14,7 @@ class ModelHome extends React.Component{
                     <h1 className="header__title">Model list</h1>
                 </div>
                     <Filter
-                        listStore = {listStore}
+                        filterModelStore = {listStore.filterModelStore}
                     />
                     <List
                         data={listStore.getModelStoreData()}

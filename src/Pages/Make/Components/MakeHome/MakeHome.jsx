@@ -29,13 +29,13 @@ class MakeHome extends React.Component{
                     </button>
                     {listStore.getMakeStoreShowCreate() ? (
                         <Create 
-                            listStore = {listStore}
+                            createStore= {listStore.createStore}
                         />
                     ) : ("")}
                 </div>
             </div>
                 <Filter
-                    listStore = {listStore}
+                    filterStore = {listStore.filterStore}
                 />
                 <List 
                     data={listStore.getMakeStoreData()}

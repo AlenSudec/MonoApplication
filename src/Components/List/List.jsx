@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ListHeader from "../ListHeader";
 import Notification from "../Notification";
-import { Observer, observer } from "mobx-react";
+import { Observer} from "mobx-react";
 
 class List extends React.Component{
     render(){
@@ -27,13 +27,13 @@ class List extends React.Component{
                         data.length !== 0 ? (
                             <div className="list">
                                 <ListHeader
-                                    listStore = {store} 
+                                    headerStore = {store.listHeaderStore} 
                                     headers={headers} 
                                 />
                                 <div className="list list--fixed-size">
                                     {data.map(item =>
                                         <ItemComponent
-                                            listStore={store}
+                                            itemStore={store.itemStore}
                                             item = {item}
                                             key = {item.docId} 
                                         />

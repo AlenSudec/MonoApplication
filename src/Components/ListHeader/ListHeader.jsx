@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { inject } from "mobx-react";
+
 
 class ListHeader extends React.Component {
     render(){
-        const store = this.props.listStore;
+        const store = this.props.headerStore;
         const headers = this.props.headers;
         return(
             <div className="list__make list__make--header">
@@ -45,4 +45,4 @@ class ListHeader extends React.Component {
     }
 }
 
-export default inject("listStore")(ListHeader);
+export default ListHeader;

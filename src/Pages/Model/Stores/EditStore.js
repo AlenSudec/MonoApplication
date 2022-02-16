@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import modelService from "../../../Common/Service/modelService";
 import ModelStore from "./ModelStore";
+import ConfirmationStore from "./ComponentStores/ConfirmationStore";
 
 class EditStore {
     currData = [];
@@ -13,11 +14,16 @@ class EditStore {
     id = "";
     constructor(){
         makeAutoObservable(this);
+        
         runInAction(async()=> {
             await this.getIdFromUrl(window.location.href);
+            this.confStore = new ConfirmationStore(this.onConfirmationExit, this.deleteMake);
             await this.getByIdAsync(this.id);
             await this.getAllMakesAsync();
         })
+    }
+    onConfirmationExit = () => {
+        this.setShowConf();
     }
     getIdFromUrl = async(url) => {
         const splitUrl = url.split("/");
@@ -95,7 +101,7 @@ class EditStore {
                 this.contents[i].MakeName = data.MakeName; 
             }
         }
-        ModelStore.setData(this.contents);
+        //ModelStore.setData(this.contents);
         this.contents = [];
     }
     handleUpdate = (e) => {
@@ -131,7 +137,7 @@ class EditStore {
                 this.contents.splice(i, 1);
             }
         }
-        ModelStore.setData(this.contents);
+        //ModelStore.setData(this.contents);
         this.contents = [];
         ModelStore.reRunGetMake();
 

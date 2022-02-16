@@ -1,15 +1,15 @@
 import React from "react";
-import { inject } from "mobx-react";
+
 import { withRouter } from "../../../../Common/hooks/withRouter";
 
 class Confirmation extends React.Component{
     render(){
-        const EditStore = this.props.editStore;
+        const confStore = this.props.confStore;
         return(
             <>
             <div 
                 className="confirmation__bg" 
-                onClick={()=>{EditStore.setShowConf()}}
+                onClick={()=>{confStore.hideConf()}}
             ></div>
             <div className="confirmation__box">
                 <h3 className="conf__title">Delete Confirmation</h3>
@@ -22,15 +22,15 @@ class Confirmation extends React.Component{
             <div className="box__btns">
                 <button 
                     className="btn btn--back" 
-                    onClick={() => {EditStore.setShowConf()}}
+                    onClick={() => {confStore.hideConf()}}
                 >
                     Back
                 </button>
                 <button 
                     className="btn btn--del" 
                     onClick={() => { 
-                        EditStore.setShowConf(); 
-                        EditStore.deleteMake(); 
+                        confStore.hideConf(); 
+                        confStore.deleteMake(); 
                         this.props.navigate("/models") 
                     }}
                 >
@@ -43,4 +43,4 @@ class Confirmation extends React.Component{
     }
 }
 
-export default withRouter(inject("editStore")(Confirmation));
+export default withRouter(Confirmation);

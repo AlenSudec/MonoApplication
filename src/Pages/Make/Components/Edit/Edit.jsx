@@ -18,6 +18,7 @@ class Edit extends React.Component{
                 {editStore.showConf ? (
                     <Confirmation 
                         editStore = {editStore}
+                        confStore = {editStore.confirmationStore}
                     />
                 ) : ("")}
                 {editStore.showNotification ? (<Notification msg="New vehicle model has been added"/>) : ("")}
@@ -65,7 +66,7 @@ class Edit extends React.Component{
                         <div>Make Id: {editStore.currData.docId}</div>
                         <button 
                             className="delete-btn" 
-                            onClick = {() => { editStore.setShowConf(true);}}
+                            onClick = {() => { editStore.setShowConf();}}
                         >
                             <FontAwesomeIcon 
                                 icon={faTrash} 

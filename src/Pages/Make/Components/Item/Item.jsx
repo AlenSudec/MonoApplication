@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import React from "react";
 class Item extends React.Component{
     render(){
-        const ListStore = this.props.listStore;
+        const itemStore = this.props.itemStore;
         const item = this.props.item;
+        
         return (
             <Link
             to={"/editMake/" + item.docId}
             className="edit-make"
-            onClick={ListStore.hideCreate}
+            onClick={itemStore.hideCreate}
             key={item.docId}
             >
                 <div className="list__make">

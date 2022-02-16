@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction} from "mobx";
 import makeService from "../../../Common/Service/makeService";
 import MakeStore from "./MakeStore";
+import ConfirmationStore from "./ComponentStores/ConfirmationStore";
+import CreateModelStore from "../../Model/Stores/ComponentStores/CreateModelStore";
 
 class EditStore {
     currData = [];
@@ -15,12 +17,17 @@ class EditStore {
     id = "";
     constructor(){
         makeAutoObservable(this);
+       
         runInAction(async() => {
             await this.getIdFromUrl(window.location.href);
-            await this.getMakeByIdAsync(this.id);
             await this.checkModels(this.id);
-        })
-        
+            this.confirmationStore = new ConfirmationStore(this.onConfirmationExit, this.hasModels, this.deleteMake);
+            await this.getMakeByIdAsync(this.id);
+            this.createModelStore = new CreateModelStore(this.handleClickOutside, this.handleSubmitCreate);
+        })  
+    }
+    onConfirmationExit = () => {
+       this.setShowConf();
     }
     getIdFromUrl = async(url) => {
         const splitUrl = url.split("/");
@@ -42,7 +49,9 @@ class EditStore {
         this.showCreate = !this.showCreate;
     }
     setShowConf(){
+        
         this.showConf = !this.showConf;
+        console.log(this.showConf);
     }
     setHasModels(value){
         this.hasModels = value;
