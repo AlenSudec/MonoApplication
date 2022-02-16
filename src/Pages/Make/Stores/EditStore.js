@@ -51,7 +51,7 @@ class EditStore {
     setShowConf(){
         
         this.showConf = !this.showConf;
-        console.log(this.showConf);
+
     }
     setHasModels(value){
         this.hasModels = value;
@@ -110,7 +110,6 @@ class EditStore {
                 this.contents[i].Revenue = parseInt(data.Revenue);
             }
         }
-        //MakeStore.setData(this.contents);
         this.contents = [];
         MakeStore.updateAllMakes(data);
         MakeStore.getAllModels();
@@ -123,11 +122,9 @@ class EditStore {
                 this.contents.splice(i, 1);
             }
         }
-        //MakeStore.setData(this.contents);
-
         this.contents = [];
-
-        MakeStore.removeFromAllMakes(id);//fix
+        MakeStore.reRunGetMakes();
+        MakeStore.removeFromAllMakes(id);
     }
    
     setCurrData(currentData){

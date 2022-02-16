@@ -17,14 +17,12 @@ class Edit extends React.Component{
             <div className="edit-container">
                 {editStore.showConf ? (
                     <Confirmation 
-                        editStore = {editStore}
                         confStore = {editStore.confirmationStore}
                     />
                 ) : ("")}
                 {editStore.showNotification ? (<Notification msg="New vehicle model has been added"/>) : ("")}
                 <div className="edit__header">
                     <div className="header__title">
-
                             <button 
                                 className="header__back" 
                                 onClick={() => {
@@ -57,7 +55,7 @@ class Edit extends React.Component{
                                         Abrv : editStore.currData.Abrv, 
                                         Name : editStore.currData.Name
                                     }}
-                                    editStore = {editStore}
+                                    createModelStore = {editStore.createModelStore}
                                 />
                             
                         ) : ("")}
@@ -142,7 +140,6 @@ class Edit extends React.Component{
                     </form>
             </div>
         )
-    //
     }
 }
 

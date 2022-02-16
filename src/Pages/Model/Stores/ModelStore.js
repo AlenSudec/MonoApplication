@@ -35,7 +35,7 @@ class ModelStore {
        this.results = [];
        getCurrAllMakes.forEach(e => {
            let result = {
-               docId: e.id,
+               docId: e.docId,
                Name: e.Name,
                Abrv: e.Abrv
            }
@@ -50,7 +50,7 @@ class ModelStore {
         getCurrAllMakes.forEach(e => {
             if(e.docId !== id){
                 let result = {
-                    docId: e.id,
+                    docId: e.docId,
                     Name: e.Name,
                     Abrv: e.Abrv
                 }
@@ -74,7 +74,7 @@ class ModelStore {
             }
             else {
                 result = {
-                    docId : e.id,
+                    docId : e.docId,
                     Name: e.Name,
                     Abrv : e.Abrv
                 }
@@ -104,8 +104,5 @@ class ModelStore {
     setListStore(listStore){
         this.listStore = listStore;
     }
-    // handleSubmitCreate = (e,data) => {
-    //     ListStore.handleSubmit(e,data);
-    // }
 }
 export default new ModelStore();

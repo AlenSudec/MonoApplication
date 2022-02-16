@@ -29,36 +29,24 @@ class ListStore {
     setBackButtonState(state){
         this.backButtonState = state;
     }
-    // setYearFilter(year){
-    //     this.yearFilter = year;
-    // }
-    // setMakeFilter(make){
-    //     this.makeFilter = make;
-    // }
     getAllMakes(){
         return ModelStore.allMakes;
     }
     getModelStoreData(){
         return ModelStore.data;
     }
-    createAsync = async (data) => { // not using
+    createAsync = async (data) => { 
         await modelService.createAsync(data);
         ModelStore.setShowCreate();
         ModelStore.setShowNotification();
         this.getMakeAsync();
     }
-    // handleChangeYear = (e) => {
-    //     this.setYearFilter(e.target.value);
-    // }
-    // handleChangeMake = (e) => {
-    //     this.setMakeFilter(e.target.value);
-    // }
     setSortFilter = (filter) => {
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
     }
 
-    handleSubmit = (e,props) => { // not using
+    handleSubmit = (e,props) => { 
         e.preventDefault();
         let data;
         data = {

@@ -14,7 +14,7 @@ class ModelService {
         data.docId = create.id;
         return await data;
     }
-    //get all makes for filtering(?)
+    //get all makes for filtering
     getAllMakesAsync = async() => {
         const getMakes = db.collection("VehicleMake");
         return await getMakes.get();

@@ -6,7 +6,7 @@ import FilterStore from "./ComponentStores/FilterStore";
 import ItemStore from "./ComponentStores/ItemStore";
 import ListHeaderStore from "../../../Common/Store/ListHeaderStore";
 
-
+//removed unused code
 class ListStore {
     results = [];
     lastVisible = null;
@@ -24,8 +24,7 @@ class ListStore {
         this.listHeaderStore = new ListHeaderStore(this.setSortFilter);
         runInAction(async () => {
             MakeStore.getListStore(this);
-            await this.getMakeAsync();
-            
+            await this.getMakeAsync(false, false);
         })
     }
     setNotification(){
@@ -118,6 +117,7 @@ class ListStore {
                 }
                 this.results.push(result);
             })
+
             MakeStore.setData(this.results);
              //check data for next page
              const resultMakeNext = await makeService.getMakeNextPageAsync(this.lastVisible,this.sortFilter, revenue, country);
@@ -131,7 +131,6 @@ class ListStore {
     }
     createMakeAsync = async (data) => {
         await makeService.createMakeAsync(data);
-        // alert("Make has been added");
         this.setShowNotification();
         this.getMakeAsync();
         MakeStore.addToAllMakesAsync(data);
@@ -158,36 +157,22 @@ class ListStore {
         }
         MakeStore.setShowCreate();
         this.createMakeAsync(data);
-        //this.setShowNotification();
     }
     handleClickOutside = () => {
         MakeStore.setShowCreate();
     }
-    // //filter functions
-    // handleChangeCountry = (e) => {
-    //     this.setCountryFilter(e.target.value);
-    // }
-    // handleChangeRevenue = (e) => {
-    //     this.setRevenueFilter(e.target.value);
-    // }
     setSortFilter = (filter) => {
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
     }
-    setAscOrDesc(){
-        if(this.ascOrDesc === "asc"){
-            this.ascOrDesc = "desc"
-        }
-        else {
-            this.ascOrDesc = "asc"
-        }
-    }
-    // setCountryFilter(countryFilter){
-    //     this.countryFilter = countryFilter;
-    // }
-    // setRevenueFilter(revenueFilter){
-    //     this.revenueFilter = revenueFilter;
+    // setAscOrDesc(){
+    //     console.log("ascdesc")
+    //     if(this.ascOrDesc === "asc"){
+    //         this.ascOrDesc = "desc"
+    //     }
+    //     else {
+    //         this.ascOrDesc = "asc"
+    //     }
     // }
 }
 export default ListStore;
-//export default new ListStore();

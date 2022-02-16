@@ -8,7 +8,7 @@ class FilterModelStore {
         this.getMakeAsync = getMakeAsync;
         this.getAllMakes = getAllMakes;
     }
-    getMakes(){
+    getAllMakes(){
         return this.getAllMakes;
     }
     runGetMakeAsync = (a, b, c, d) => {

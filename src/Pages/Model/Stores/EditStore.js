@@ -101,7 +101,6 @@ class EditStore {
                 this.contents[i].MakeName = data.MakeName; 
             }
         }
-        //ModelStore.setData(this.contents);
         this.contents = [];
     }
     handleUpdate = (e) => {
@@ -137,7 +136,6 @@ class EditStore {
                 this.contents.splice(i, 1);
             }
         }
-        //ModelStore.setData(this.contents);
         this.contents = [];
         ModelStore.reRunGetMake();
 

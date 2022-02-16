@@ -16,21 +16,21 @@ class CreateModel extends React.Component{
             2019, 
             2020
         ];
-        const store = this.props.editStore;
+        const store = this.props.createModelStore;
         const data = this.props.data;
         return(
             <>
                 <div
                     className="create-filler"
-                    onClick={store.handleClickOutside}
+                    onClick={store.onCreateHide}
                 ></div>
                 <div className="create-container container--right">
                     <div className="create-arrow"></div>
                     <form 
                         className="create-form" 
                         onSubmit={(e) => { 
-                            store.handleSubmitCreate(e,data); 
-                            store.handleClickOutside() 
+                            store.onSubmit(e,data); 
+                            store.onCreateHide() 
                         }}
                     >
                         <div className="create-info">

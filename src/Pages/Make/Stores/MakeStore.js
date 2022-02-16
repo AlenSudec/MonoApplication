@@ -44,9 +44,9 @@ class MakeStore {
     setListStore(listStore){
         this.listStore = listStore;
     }
-    // setShowNotification = () => {
-    //     EditStore.setShowNotification();
-    // }
+    reRunGetMakes(){
+        this.listStore.getMakeAsync();
+    }
 }
 
 export default new MakeStore();

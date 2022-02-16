@@ -1,10 +1,12 @@
+import { makeAutoObservable} from "mobx";
 class CreateStore {
     constructor(handleClickOutside, handleSubmit){
-        this.handleClickOutside = handleClickOutside;
+        makeAutoObservable(this);
+        this.handleClick = handleClickOutside;
         this.handleSubmit = handleSubmit;
     }
-    onClickOutside(){
-        this.handleClickOutside();
+    onClickOutside = () => {
+        this.handleClick();
     }
     onHandleSubmit = (e) => {
         this.handleSubmit(e);

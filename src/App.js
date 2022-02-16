@@ -13,10 +13,6 @@ import {
 } from "react-router-dom";
 import React from 'react';
 
-
-
-
-// function App() {
 class App extends React.Component{
   render(){
     return (
@@ -39,8 +35,8 @@ class App extends React.Component{
             </Router>
           </Provider>
       </div>
-      )  
-    }
+    )  
+  }
 }
 export default App;
 

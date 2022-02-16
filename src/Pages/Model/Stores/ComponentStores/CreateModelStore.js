@@ -6,7 +6,7 @@ class CreateModelStore {
         this.handleClick = handleClickOutside;
         this.submit = handleSubmit;
     }
-    onCreateHide(){
+    onCreateHide = () => {
         this.handleClick();
     }
     onSubmit = (e, data) => {

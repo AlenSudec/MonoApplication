@@ -1,5 +1,4 @@
 import React from "react";
-
 import { withRouter } from "../../../../Common/hooks/withRouter";
 
 class Confirmation extends React.Component{
