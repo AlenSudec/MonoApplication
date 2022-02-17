@@ -17,7 +17,6 @@ class EditStore {
     id = "";
     constructor(){
         makeAutoObservable(this);
-       
         runInAction(async() => {
             await this.getIdFromUrl(window.location.href);
             await this.checkModels(this.id);
@@ -49,7 +48,6 @@ class EditStore {
         this.showCreate = !this.showCreate;
     }
     setShowConf(){
-        
         this.showConf = !this.showConf;
 
     }
@@ -59,12 +57,14 @@ class EditStore {
     handleClick = () => {
         this.setShowCreate();
     }
-    getRunOnce(){
-        return MakeStore.runOnce;
-    }
-    setRunOnce(){
-        MakeStore.setRunOnce();
-    }
+    // getRunOnce(){
+    //     console.log("getrunonce");
+    //     return MakeStore.runOnce;
+    // }
+    // setRunOnce(){
+    //     console.log("setrunonce");
+    //     MakeStore.setRunOnce();
+    // }
     //check if models have make
     checkModels = async (id) => {
         const resultMake = await makeService.checkModels(id);
@@ -137,17 +137,18 @@ class EditStore {
         this.country = country;
     }
     //edit functions
-    handleBack = async () => {
-        MakeStore.setRunOnce();
-        this.data = {
-            docId : null,
-            Name : "",
-            Abrv: "",
-            Country: "",
-            Revenue: "",
-        }
-        this.setCurrData(this.data);
-    }
+    // handleBack = async () => {
+    //     console.log("handleback");
+    //     MakeStore.setRunOnce();
+    //     this.data = {
+    //         docId : null,
+    //         Name : "",
+    //         Abrv: "",
+    //         Country: "",
+    //         Revenue: "",
+    //     }
+    //     this.setCurrData(this.data);
+    // }
     deleteMake = () => {
         this.deleteMakeAsync(this.currDataId);
         this.data = {

@@ -96,7 +96,8 @@ class ModelStore {
         this.showCreate = !this.showCreate;
     }
     reRunGetMake(){
-        this.listStore.getMakeAsync();
+        console.log(this.listStore);
+        this.listStore.getMakeAsync(); //not accessible if model list store not init
     }
     getListStore(listStore){
         this.setListStore(listStore);
