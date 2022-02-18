@@ -45,26 +45,6 @@ class ListStore {
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
     }
-
-    handleSubmit = (e,props) => { 
-        e.preventDefault();
-        let data;
-        data = {
-            docId: "",
-            Name: e.target.modelName.value,
-            Abrv: props.Abrv,
-            MakeId: props.id,
-            MakeName : props.Name,
-            modelYear : e.target.modelYear.value
-        }
-        this.createAsync(data);
-    }
-    handleClick = () => {
-        ModelStore.setShowCreate();
-    }
-    handleClickOutside = () => {
-        ModelStore.setShowCreate();
-    }
     getMakeAsync = async(frwrd, bcwrd, yearFilter = "None", makeFilter = "None") => {
         if(frwrd){
             const resultMake = await modelService.getNextPageAsync(this.lastVisible, this.sortFilter, yearFilter, makeFilter);
@@ -79,7 +59,7 @@ class ListStore {
                         Abrv : doc.data().Abrv,
                         Name : doc.data().Name,
                         MakeId : doc.data().MakeId,
-                        MakeName : doc.data().MakeName,
+                        MakeName : doc.data().MakeName, 
                         Year : doc.data().Year
                     }
                     this.results.push(result);

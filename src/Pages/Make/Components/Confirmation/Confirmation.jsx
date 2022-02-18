@@ -46,7 +46,6 @@ class Confirmation extends React.Component {
                                 Delete
                             </button>
                         )}
-                        
                     </div>
                 </div>
             </>

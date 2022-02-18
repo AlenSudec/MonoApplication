@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import modelService from "../../../Common/Service/modelService";
-import MainStore from "../../../Common/Store/MainStore";
 
 class ModelStore {
     data = [];
@@ -11,9 +10,6 @@ class ModelStore {
     constructor(){
         makeAutoObservable(this);
         this.getAllMakesAsync();
-    }
-    setShowNotification = () => {
-        MainStore.setShowNotification();
     }
     //get all makes for filter dropdown
     getAllMakesAsync = async () => {
@@ -89,15 +85,8 @@ class ModelStore {
     setData(data){
         this.data = data;
     }
-    setRunOnce(){
-        this.runOnce = !this.runOnce;
-    }
-    setShowCreate(){
-        this.showCreate = !this.showCreate;
-    }
-    reRunGetMake(){
-        console.log(this.listStore);
-        this.listStore.getMakeAsync(); //not accessible if model list store not init
+    getAllModels = async () => {
+        await this.listStore.getMakeAsync();
     }
     getListStore(listStore){
         this.setListStore(listStore);
@@ -105,5 +94,6 @@ class ModelStore {
     setListStore(listStore){
         this.listStore = listStore;
     }
+    
 }
 export default new ModelStore();

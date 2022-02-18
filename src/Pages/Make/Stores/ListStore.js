@@ -6,7 +6,6 @@ import FilterStore from "./ComponentStores/FilterStore";
 import ItemStore from "./ComponentStores/ItemStore";
 import ListHeaderStore from "../../../Common/Store/ListHeaderStore";
 
-//removed unused code
 class ListStore {
     results = [];
     lastVisible = null;
@@ -165,14 +164,5 @@ class ListStore {
         this.sortFilter = filter;
         this.getMakeAsync(false,false);
     }
-    // setAscOrDesc(){
-    //     console.log("ascdesc")
-    //     if(this.ascOrDesc === "asc"){
-    //         this.ascOrDesc = "desc"
-    //     }
-    //     else {
-    //         this.ascOrDesc = "asc"
-    //     }
-    // }
 }
 export default ListStore;

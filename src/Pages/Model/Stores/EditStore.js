@@ -14,7 +14,6 @@ class EditStore {
     id = "";
     constructor(){
         makeAutoObservable(this);
-        
         runInAction(async()=> {
             await this.getIdFromUrl(window.location.href);
             this.confStore = new ConfirmationStore(this.onConfirmationExit, this.deleteMake);
@@ -40,12 +39,6 @@ class EditStore {
     }
     handleOnChange = (e) => {
         this.setSelectValue(e.target.value);
-    }
-    setRunOnce(){
-        ModelStore.setRunOnce();
-    }
-    getRunOnce(){
-        return ModelStore.runOnce;
     }
     getAllMakesAsync = async () => {
         const getMakes = await modelService.getAllMakesAsync();
@@ -91,17 +84,6 @@ class EditStore {
     }
     updateAsync = async (data) => {
         await modelService.updateAsync(data);
-        
-        for(let i = 0; i < this.contents.length; i++){
-            if(this.contents[i].docId === data.docId){
-                this.contents[i].Name = data.Name;
-                this.contents[i].Year = data.Year;
-                this.contents[i].Abrv = data.Abrv;
-                this.contents[i].MakeId = data.MakeId;
-                this.contents[i].MakeName = data.MakeName; 
-            }
-        }
-        this.contents = [];
     }
     handleUpdate = (e) => {
         e.preventDefault();
@@ -116,10 +98,8 @@ class EditStore {
         }
         this.updateAsync(this.data);
         this.setCurrData(this.data);
-        ModelStore.setRunOnce();
     }
     handleBack = async () => {
-        ModelStore.setRunOnce();
         this.data = {
             docId : null,
             Name: "",
@@ -131,14 +111,7 @@ class EditStore {
     }
     deleteAsync = async (id) => {
         await modelService.deleteAsync(id);
-        for(let i = 0; i < this.contents.length; i++) {
-            if(this.contents[i].docId === id){
-                this.contents.splice(i, 1);
-            }
-        }
-        this.contents = [];
-        ModelStore.reRunGetMake();
-
+        ModelStore.getAllModels();
     }
     deleteMake = ()  => {
         this.deleteAsync(this.currDataId);
@@ -150,7 +123,6 @@ class EditStore {
             Year: null
         }
         this.setCurrData(this.data);
-        ModelStore.setRunOnce();
     }
     setCurrData(currentData){
         this.currData = currentData;

@@ -20,7 +20,7 @@ class EditStore {
         runInAction(async() => {
             await this.getIdFromUrl(window.location.href);
             await this.checkModels(this.id);
-            this.confirmationStore = new ConfirmationStore(this.onConfirmationExit, this.hasModels, this.deleteMake);
+            
             await this.getMakeByIdAsync(this.id);
             this.createModelStore = new CreateModelStore(this.handleClickOutside, this.handleSubmitCreate);
         })  
@@ -48,6 +48,7 @@ class EditStore {
         this.showCreate = !this.showCreate;
     }
     setShowConf(){
+        if(!this.showConf) this.confirmationStore = new ConfirmationStore(this.onConfirmationExit, this.hasModels, this.deleteMake);
         this.showConf = !this.showConf;
 
     }
@@ -57,14 +58,6 @@ class EditStore {
     handleClick = () => {
         this.setShowCreate();
     }
-    // getRunOnce(){
-    //     console.log("getrunonce");
-    //     return MakeStore.runOnce;
-    // }
-    // setRunOnce(){
-    //     console.log("setrunonce");
-    //     MakeStore.setRunOnce();
-    // }
     //check if models have make
     checkModels = async (id) => {
         const resultMake = await makeService.checkModels(id);
@@ -112,18 +105,10 @@ class EditStore {
         }
         this.contents = [];
         MakeStore.updateAllMakes(data);
-        MakeStore.getAllModels();
     }
     deleteMakeAsync = async (id) => {
         await makeService.deleteMakeASync(id);
-        
-        for(let i = 0; i < this.contents.length; i++){
-            if(this.contents[i].docId === id){
-                this.contents.splice(i, 1);
-            }
-        }
-        this.contents = [];
-        MakeStore.reRunGetMakes();
+        MakeStore.getAllMakes();
         MakeStore.removeFromAllMakes(id);
     }
    
@@ -136,19 +121,6 @@ class EditStore {
     setCurrDataCountry(country){
         this.country = country;
     }
-    //edit functions
-    // handleBack = async () => {
-    //     console.log("handleback");
-    //     MakeStore.setRunOnce();
-    //     this.data = {
-    //         docId : null,
-    //         Name : "",
-    //         Abrv: "",
-    //         Country: "",
-    //         Revenue: "",
-    //     }
-    //     this.setCurrData(this.data);
-    // }
     deleteMake = () => {
         this.deleteMakeAsync(this.currDataId);
         this.data = {
@@ -195,8 +167,8 @@ class EditStore {
     }
     createModelAsync = async (data) => {
         await makeService.createModelAsync(data);
+        this.setHasModels(true);
         this.setShowNotification();
-
     }
 }
 export default EditStore;
